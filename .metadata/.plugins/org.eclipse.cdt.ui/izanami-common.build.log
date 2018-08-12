@@ -1,19 +1,6 @@
-17:59:30 **** Incremental Build of configuration Debug for project izanami-common ****
+21:25:05 **** Incremental Build of configuration Debug for project izanami-common ****
 make all 
-Building file: ../src/networkserver.c
-Invoking: GCC C Compiler
-gcc -I/home/caojx/download/iniparser-master/src -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"src/networkserver.d" -MT"src/networkserver.d" -o "src/networkserver.o" "../src/networkserver.c"
-../src/networkserver.c: 在函数‘initnetworkserver’中:
-../src/networkserver.c:74:2: 警告：隐式声明函数‘inet_pton’ [-Wimplicit-function-declaration]
-  inet_pton(AF_INET, server->eth, &(server->server_addr.sin_addr));
-  ^
-Finished building: ../src/networkserver.c
- 
-Building target: libizanami-common.so
-Invoking: GCC C Linker
-gcc -L/home/caojx/download/iniparser-master -shared -o "libizanami-common.so"  ./src/common.o ./src/networkserver.o   -liniparser -lpthread
-Finished building target: libizanami-common.so
- 
+make: 对“all”无需做任何事。
 
-17:59:30 Build Finished (took 360ms)
+21:25:05 Build Finished (took 59ms)
 

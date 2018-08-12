@@ -1,6 +1,6 @@
-17:59:45 **** Incremental Build of configuration Debug for project izanami-master ****
+21:24:01 **** Incremental Build of configuration Debug for project izanami-master ****
 make all 
 make: 对“all”无需做任何事。
 
-17:59:45 Build Finished (took 57ms)
+21:24:01 Build Finished (took 67ms)
 
