@@ -1,0 +1,10 @@
+/*
+ * izanami-master.c
+ *
+ *  Created on: 2018年8月11日
+ *      Author: caojx
+ */
+
+#include "izanami-master.h"
+
+void configmaster(struct networkserver *server) {}

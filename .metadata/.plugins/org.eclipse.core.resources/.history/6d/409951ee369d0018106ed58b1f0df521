@@ -1,0 +1,35 @@
+/*
+ * networkserver.c
+ *
+ *  Created on: 2018年8月11日
+ *      Author: caojx
+ */
+
+#include "networkserver.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/socket.h>
+#include <string.h> // memset
+#include <fcntl.h> // fcntl
+#include <errno.h> // errno
+#include <unistd.h> // close
+
+struct networkserver *initnetworkserver(networkserverconfig config) {
+
+	struct networkserver *server = (struct networkserver *) malloc(
+			sizeof(struct networkserver));
+
+	if (server == NULL) {
+		printf("初始化networkserver失败");
+		exit(EXIT_FAILURE);
+	}
+
+	config(server);
+	server->epollfd = epoll_create(server->maxconn + 1);
+	server->requests = (struct epoll_event *) malloc(
+			sizeof(struct epoll_event) * (server->maxconn + 1));
+
+	server->serversock = socket(AF_INET, SOCK_STREAM, 0);
+	return server;
+}

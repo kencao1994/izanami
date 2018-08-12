@@ -1,0 +1,26 @@
+/*
+ * networkserver.c
+ *
+ *  Created on: 2018年8月11日
+ *      Author: caojx
+ */
+
+#include "networkserver.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct networkserver *initnetworkserver(networkserverconfig config) {
+
+	struct networkserver *server = (struct networkserver *) malloc(
+			sizeof(struct networkserver));
+
+	if (server == NULL) {
+		printf("初始化networkserver失败");
+		exit(EXIT_FAILURE);
+	}
+
+	config(server);
+
+	return server;
+}

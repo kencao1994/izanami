@@ -1,0 +1,14 @@
+/*
+ * common.c
+ *
+ *  Created on: 2018年8月11日
+ *      Author: caojx
+ */
+
+#include "iniparser.h"
+
+dictionary *getdict() {
+
+	if (dict == NULL) {}
+	return dict;
+}
