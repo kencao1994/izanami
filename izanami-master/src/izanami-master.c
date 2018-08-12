@@ -26,10 +26,8 @@ void configmaster(struct networkserver *server) {
 	dictionary *dict = getdict();
 	server->port = iniparser_getint(dict, IZANAMI_MASTER_PORT, 7000);
 	server->eth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
-	memset(&(server->server_addr), 0, sizeof(struct sockaddr_in));
-	inet_pton(AF_INET, server->eth, &(server->server_addr.sin_addr));
-	server->server_addr.sin_family = AF_INET;
-	server->server_addr.sin_port = htons(server->port);
+	server->maxconn = iniparser_getint(dict, IZANAMI_MASTER_MAXCONN, 1024);
+
 
 	server->executor = (struct executor*) initmasterexecutor();
 }

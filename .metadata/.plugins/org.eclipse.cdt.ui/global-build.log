@@ -1,3 +1,10 @@
-14:56:16 **** Incremental Build of configuration Debug for project izanami-master ****
+17:59:34 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+Building target: izanami-master
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-master"  ./src/izanami-master.o ./src/main.o ./src/masterexecutor.o   -lizanami-common -lpthread -liniparser
+Finished building target: izanami-master
+ 
+17:59:45 **** Incremental Build of configuration Debug for project izanami-master ****
 make all 
 make: 对“all”无需做任何事。

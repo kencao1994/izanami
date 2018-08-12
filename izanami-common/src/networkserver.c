@@ -69,6 +69,12 @@ struct networkserver *initnetworkserver(networkserverconfig config) {
 	}
 
 	config(server);
+
+	memset(&(server->server_addr), 0, sizeof(struct sockaddr_in));
+	inet_pton(AF_INET, server->eth, &(server->server_addr.sin_addr));
+	server->server_addr.sin_family = AF_INET;
+	server->server_addr.sin_port = htons(server->port);
+
 	server->epollfd = epoll_create(server->maxconn + 1);
 	server->requests = (struct epoll_event *) malloc(
 			sizeof(struct epoll_event) * (server->maxconn + 1));

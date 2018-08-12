@@ -12,5 +12,7 @@
 
 #define IZANAMI_MASTER_ETH "master:eth"
 #define IZANAMI_MASTER_PORT "master:port"
+#define IZANAMI_MASTER_MAXCONN "master:maxconn"
+
 
 #endif /* SRC_CONFIG_H_ */
