@@ -22,13 +22,13 @@ dictionary *getdict() {
 
 void readline(int fd, char *buf, int buflen) {
 
+	char *ptr = buf;
 	memset(buf, 0, buflen);
 	int readcount = read(fd, buf, buflen);
 	if (readcount == 0) {
 		printf("no lines left\n");
 		exit(-1);
 	}
-	char *ptr = buf;
 	int seekindex = 0;
 	while (*ptr != NEXTLINE) {
 		seekindex++;
