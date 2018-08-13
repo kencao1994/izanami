@@ -5,7 +5,11 @@
  *      Author: caojx
  */
 
+#include "izanami-worker.h"
+
 int main() {
 
+	struct worker *_worker = initworker();
+	waitworkerfinish(_worker);
 	return 0;
 }

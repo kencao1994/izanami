@@ -5,14 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/common.c \
+../src/iregioninfo.c \
 ../src/networkserver.c 
 
 OBJS += \
 ./src/common.o \
+./src/iregioninfo.o \
 ./src/networkserver.o 
 
 C_DEPS += \
 ./src/common.d \
+./src/iregioninfo.d \
 ./src/networkserver.d 
 
 

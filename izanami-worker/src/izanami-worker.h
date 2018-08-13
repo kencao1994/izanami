@@ -13,9 +13,10 @@
 struct worker {
 
 	struct networkserver *networkserver;
+	pthread_t reportthread;
 };
 
-struct master * initmaster();
+struct worker * initworker();
 void waitworkerfinish(struct worker *_worker);
 
 #endif /* IZANAMI_WORKER_H_ */

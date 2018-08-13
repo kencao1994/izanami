@@ -39,6 +39,5 @@ struct master * initmaster() {
 	struct masterexecutor * executor =
 			(struct masterexecutor *) (ret->networkserver->executor);
 	executor->server = ret;
-
 	return ret;
 }
