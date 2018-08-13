@@ -12,6 +12,8 @@
 
 #include <stdlib.h>
 
+#define NEXTLINE '\n'
+
 #define TRUE 1
 #define FALSE 0
 
@@ -20,5 +22,6 @@ struct executor;
 struct server;
 
 dictionary *getdict();
+void readline(int fd, char *buf, int buflen);
 
 #endif /* SRC_COMMON_H_ */
