@@ -35,6 +35,5 @@ void readline(int fd, char *buf, int buflen) {
 		ptr++;
 	}
 	buf[seekindex] = '\0';
-	printf("%d %d", seekindex, readcount);
 	lseek(fd, seekindex - readcount + 1, SEEK_CUR);
 }
