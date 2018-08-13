@@ -1,3 +1,26 @@
-20:40:56 **** Incremental Build of configuration Debug for project izanami-common ****
+23:36:04 **** Incremental Build of configuration Debug for project izanami-common ****
+make all 
+make: 对“all”无需做任何事。
+23:36:08 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+Building target: izanami-worker
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-worker"  ./src/izanami-worker.o ./src/main.o ./src/workerexecutor.o   -lizanami-common -liniparser -lpthread
+Finished building target: izanami-worker
+ 
+23:36:19 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+23:37:08 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+Building target: izanami-worker
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-worker"  ./src/izanami-worker.o ./src/main.o ./src/workerexecutor.o   -lizanami-common -liniparser -lpthread
+Finished building target: izanami-worker
+ 
+23:38:45 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+23:39:18 **** Incremental Build of configuration Debug for project izanami-worker ****
 make all 
 make: 对“all”无需做任何事。

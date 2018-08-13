@@ -7,7 +7,12 @@
 
 #include "izanami-worker.h"
 
+#include <stdlib.h>
+#include <time.h>
+
 int main() {
+
+	srand(time(NULL));
 
 	struct worker *_worker = initworker();
 	waitworkerfinish(_worker);

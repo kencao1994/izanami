@@ -56,7 +56,10 @@ void cleariregioninfoset(struct iregioninfoset *set) {
 void setiregioninfoset(struct iregioninfoset *set, const char *filepath) {
 
 	cleariregioninfoset(set);
+	while (set->num < set->maxnum) {
+		set->num ++;
 
+	}
 }
 
 //从worker上报的消息中获取iregioninfo
