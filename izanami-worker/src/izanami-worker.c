@@ -9,6 +9,7 @@
 #include "config.h"
 #include "dictionary.h"
 #include "iniparser.h"
+#include "iregioninfo.h"
 #include "izanami-worker.h"
 #include "workerexecutor.h"
 
@@ -25,7 +26,7 @@ void configworker(struct networkserver *server) {
 	server->executor = (struct executor*) initworkerexecutor();
 }
 
-void * initreportthread(void *args) {
+void *initreportthread(void *args) {
 
 	struct workerexecutor *_worker = (struct workerexecutor *) args;
 	dictionary *dict = getdict();
@@ -33,16 +34,25 @@ void * initreportthread(void *args) {
 
 	while (TRUE) {
 
+		setiregioninfoset(_worker->server->set, _worker->server->datadir);
 		sleep(period);
 	}
 
 	return NULL;
 }
 
-struct worker * initworker() {
+void configworkerset(struct iregioninfoset* set) {
+
+	dictionary *dict = getdict();
+	set->maxnum = iniparser_getint(dict, IZANAMI_WORKER_REGMAXNUM, 1024);
+	set->num = 0;
+}
+
+struct worker *initworker() {
 
 	struct worker *_worker = (struct worker *) malloc(sizeof(struct worker));
 	_worker->networkserver = initnetworkserver(configworker);
+	_worker->set = initiregioninfoset(configworkerset);
 	struct workerexecutor *executor =
 			(struct workerexecutor *) _worker->networkserver->executor;
 	executor->server = _worker;

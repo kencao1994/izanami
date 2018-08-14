@@ -13,6 +13,8 @@
 struct worker {
 
 	struct networkserver *networkserver;
+	struct iregioninfoset *set;
+	char *datadir;
 	pthread_t reportthread;
 };
 

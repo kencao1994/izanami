@@ -19,6 +19,7 @@
 #define IZANAMI_MASTER_ETH "master:eth"
 #define IZANAMI_MASTER_PORT "master:port"
 #define IZANAMI_MASTER_MAXCONN "master:maxconn"
+#define IZANAMI_MASTER_MAXWORKER "master:maxworker"
 
 #define IZANAMI_REGION_NAME_LEN 32
 #define IZANAMI_REGION_BOUNDARY_FILE "boundary"
@@ -27,5 +28,6 @@
 #define IZANAMI_WORKER_PORT "worker:port"
 #define IZANAMI_WORKER_MAXCONN "worker:maxconn"
 #define IZANAMI_WORKER_REPORT_PERIOD "worker:reportperiod"
+#define IZANAMI_WORKER_REGMAXNUM "worker:maxregnum"
 
 #endif /* SRC_CONFIG_H_ */

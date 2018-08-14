@@ -8,14 +8,16 @@
 #ifndef SRC_IZANAMI_MASTER_H_
 #define SRC_IZANAMI_MASTER_H_
 
+#include "iregioninfo.h"
 #include "networkserver.h"
 
 struct master {
 
 	struct networkserver *networkserver;
+	struct iregioninfoset *set;
 };
 
-struct master * initmaster();
+struct master *initmaster();
 void waitmasterfinish(struct master *_master);
 
 #endif /* SRC_IZANAMI_MASTER_H_ */

@@ -32,12 +32,22 @@ void configmaster(struct networkserver *server) {
 	server->executor = (struct executor*) initmasterexecutor();
 }
 
+void configmasterset(struct iregioninfoset *set) {
+
+	dictionary *dict = getdict();
+	int single = iniparser_getint(dict, IZANAMI_WORKER_REGMAXNUM, 1024);
+	int maxworker = iniparser_getint(dict, IZANAMI_MASTER_MAXWORKER, 512);
+	set->maxnum = single * maxworker;
+	set->num = 0;
+}
+
 struct master * initmaster() {
 
-	struct master * ret = (struct master *) malloc(sizeof(struct master));
-	ret->networkserver = initnetworkserver(configmaster);
+	struct master *_master = (struct master *) malloc(sizeof(struct master));
+	_master->networkserver = initnetworkserver(configmaster);
+	_master->set = initiregioninfoset(configmasterset);
 	struct masterexecutor * executor =
-			(struct masterexecutor *) (ret->networkserver->executor);
-	executor->server = ret;
-	return ret;
+			(struct masterexecutor *) (_master->networkserver->executor);
+	executor->server = _master;
+	return _master;
 }
