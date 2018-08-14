@@ -38,10 +38,3 @@ void readline(int fd, char *buf, int buflen) {
 	lseek(fd, seekindex - readcount + 1, SEEK_CUR);
 }
 
-void strsub(const char *longstr, const char *shortstr, char *result) {
-
-	int shortlen = strlen(shortstr);
-	int longlen = strlen(longstr);
-	char *ptr = longstr + shortlen;
-	strcpy(result, ptr, (longlen - shortlen));
-}

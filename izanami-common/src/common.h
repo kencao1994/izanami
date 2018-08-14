@@ -23,6 +23,5 @@ struct server;
 
 dictionary *getdict();
 void readline(int fd, char *buf, int buflen);
-void strsub(const char *longstr, const char *shortstr, char *result);
 
 #endif /* SRC_COMMON_H_ */

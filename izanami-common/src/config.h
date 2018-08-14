@@ -9,6 +9,8 @@
 #define SRC_CONFIG_H_
 
 #define IZANAMI_CONFIG "/izanami/config"
+#define IZANAMI_THIS_DIR "."
+#define IZANAMI_PARENT_DIR ".."
 
 #define IZANAMI_MAX_LEN 4096
 #define IZANAMI_MAX_KEY_LEN 512

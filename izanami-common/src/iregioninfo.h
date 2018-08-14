@@ -31,7 +31,7 @@ struct iregioninfoset {
 
 //设置最大region数，初始化infos堆内存
 typedef void (*configiregioninfoset)(struct iregioninfoset* set);
-struct iregioninfoset * initiregioninfoset(configiregioninfoset fn);
+struct iregioninfoset *initiregioninfoset(configiregioninfoset fn);
 
 //从文件中获取iregion 相关信息
 void setiregioninfoset(struct iregioninfoset* set, const char *filepath);
