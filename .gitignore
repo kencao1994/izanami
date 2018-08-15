@@ -1,4 +1,4 @@
-/RemoteSystemsTempFiles
-.metadata
+RemoteSystemsTempFiles/
+.metadata/
 *.so
 *.o
