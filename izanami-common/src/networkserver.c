@@ -17,13 +17,13 @@
 #include <string.h>
 #include <unistd.h>
 
-void * startnetworkserver(void *arg) {
+void *startnetworkserver(void *arg) {
 
 	struct networkserver *server = arg;
 
 	while (TRUE) {
 		int nfds = epoll_wait(server->epollfd, server->requests,
-				server->maxconn, -1);
+				server->maxconn + 1, -1);
 
 		if (nfds == -1) {
 			printf("epoll wait 出错");

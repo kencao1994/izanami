@@ -11,5 +11,7 @@
 
 struct workerexecutor *initworkerexecutor() {
 
-	return NULL;
+	struct workerexecutor *executor = (struct workerexecutor *)malloc(sizeof(struct workerexecutor));
+
+	return executor;
 }

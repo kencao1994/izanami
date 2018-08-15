@@ -10,6 +10,7 @@ src/izanami-worker.d: ../src/izanami-worker.c \
  /home/caojx/workspace/mydb/izanami-common/src/networkserver.h \
  /home/caojx/workspace/mydb/izanami-common/src/common.h \
  /home/caojx/workspace/mydb/izanami-common/src/executor.h \
+ /home/caojx/workspace/mydb/izanami-common/src/operation.h \
  ../src/workerexecutor.h
 
 /home/caojx/workspace/mydb/izanami-common/src/common.h:
@@ -33,5 +34,7 @@ src/izanami-worker.d: ../src/izanami-worker.c \
 /home/caojx/workspace/mydb/izanami-common/src/common.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/executor.h:
+
+/home/caojx/workspace/mydb/izanami-common/src/operation.h:
 
 ../src/workerexecutor.h:

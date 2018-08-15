@@ -11,6 +11,7 @@
 #include "iniparser.h"
 #include "iregioninfo.h"
 #include "izanami-worker.h"
+#include "operation.h"
 #include "workerexecutor.h"
 
 #include <pthread.h>
@@ -20,24 +21,41 @@
 void configworker(struct networkserver *server) {
 
 	dictionary *dict = getdict();
-	server->port = iniparser_getint(dict, IZANAMI_WORKER_ETH, 7000);
-	server->eth = iniparser_getstring(dict, IZANAMI_WORKER_PORT, "0.0.0.0");
+	server->port = iniparser_getint(dict, IZANAMI_WORKER_PORT, 8000);
+	server->eth = iniparser_getstring(dict, IZANAMI_WORKER_ETH, "0.0.0.0");
 	server->maxconn = iniparser_getint(dict, IZANAMI_WORKER_MAXCONN, 1024);
 	server->executor = (struct executor*) initworkerexecutor();
 }
 
+
+static enum operation reportop = report;
 void *initreportthread(void *args) {
 
-	struct workerexecutor *_worker = (struct workerexecutor *) args;
+	struct worker *_worker = (struct worker *) args;
 	dictionary *dict = getdict();
 	int period = iniparser_getint(dict, IZANAMI_WORKER_REPORT_PERIOD, 10);
 
+	int masterport = iniparser_getint(dict, IZANAMI_MASTER_PORT, 7000);
+	char *mastereth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
+	int masterfd = socket(AF_INET, SOCK_STREAM, 0);
+	struct sockaddr_in addr;
+	memset(&addr, 0, sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(masterport);
+	addr.sin_addr.s_addr = inet_addr(mastereth);
+	connect(masterfd, &addr, sizeof(addr));
+
 	while (TRUE) {
 
-		setiregioninfoset(_worker->server->set, _worker->server->datadir);
+		setiregioninfoset(_worker->set, _worker->datadir);
+
+		send(masterfd, &reportop, sizeof(report), 0);
+		send(masterfd, &(_worker->set->num), sizeof(int), 0);
+		send(masterfd, _worker->set->infos,
+				_worker->set->num * sizeof(struct iregioninfo), 0);
+
 		sleep(period);
 	}
-
 	return NULL;
 }
 
@@ -53,9 +71,11 @@ struct worker *initworker() {
 	struct worker *_worker = (struct worker *) malloc(sizeof(struct worker));
 	_worker->networkserver = initnetworkserver(configworker);
 	_worker->set = initiregioninfoset(configworkerset);
-	struct workerexecutor *executor =
-			(struct workerexecutor *) _worker->networkserver->executor;
-	executor->server = _worker;
+	_worker->datadir = iniparser_getstring(getdict(), IZANAMI_WORKER_DATADIR,
+			"/izanami/data");
+
+	_worker->networkserver->executor = (struct executor *) initworkerexecutor();
+	((struct workerexecutor *)_worker->networkserver->executor)->server = _worker;
 
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);

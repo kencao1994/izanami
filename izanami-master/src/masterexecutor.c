@@ -6,10 +6,27 @@
  */
 
 #include "masterexecutor.h"
+#include "operation.h"
 
 #include <stdlib.h>
 
-void masterexecute(void *this, int fd) {}
+void masterexecute(void *this, int fd) {
+
+	struct master *_master;
+	enum operation op;
+	recv(fd, &op, sizeof(op), 0);
+
+	switch (op) {
+
+	case report:
+		printf("executing report");
+		break;
+	case assign:
+		break;
+	default:;
+	}
+
+}
 
 struct masterexecutor *initmasterexecutor() {
 
