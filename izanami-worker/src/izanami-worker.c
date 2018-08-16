@@ -63,6 +63,10 @@ void configworkerset(struct iregioninfoset* set) {
 
 	dictionary *dict = getdict();
 	set->maxnum = iniparser_getint(dict, IZANAMI_WORKER_REGMAXNUM, 1024);
+	if (set->maxnum > IZANAMI_WOEKER_REGMAXNUM_MAX) {
+		set->maxnum = IZANAMI_WOEKER_REGMAXNUM_MAX;
+	}
+
 	set->num = 0;
 }
 

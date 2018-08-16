@@ -6,24 +6,33 @@
  */
 
 #include "masterexecutor.h"
+#include "masteriregioninfo.h"
 #include "operation.h"
 
 #include <stdlib.h>
 
+static void *regbuf[sizeof(struct iregioninfo) * IZANAMI_WOEKER_REGMAXNUM_MAX];
+
 void masterexecute(void *this, int fd) {
 
-	struct master *_master;
+	struct master *_master = ((struct masterexecutor *) this)->server;
 	enum operation op;
 	recv(fd, &op, sizeof(op), 0);
 
 	switch (op) {
 
-	case report:
-		printf("executing report");
+	case report: {
+		int num = 0;
+		recv(fd, &num, sizeof(int), 0);
+		recv(fd, regbuf, sizeof(struct iregioninfo) * num, 0);
+		recviregionfromworker(_master, num, regbuf);
 		break;
-	case assign:
+	}
+	case assign: {
 		break;
-	default:;
+	}
+	default:
+		;
 	}
 
 }

@@ -29,6 +29,7 @@
 #define IZANAMI_WORKER_MAXCONN "worker:maxconn"
 #define IZANAMI_WORKER_REPORT_PERIOD "worker:reportperiod"
 #define IZANAMI_WORKER_REGMAXNUM "worker:maxregnum"
+#define IZANAMI_WOEKER_REGMAXNUM_MAX 1024
 #define IZANAMI_WORKER_DATADIR "worker:datadir"
 
 #endif /* SRC_CONFIG_H_ */
