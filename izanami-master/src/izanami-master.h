@@ -9,12 +9,12 @@
 #define SRC_IZANAMI_MASTER_H_
 
 #include "iregioninfo.h"
-#include "networkserver.h"
+#include "mastersideworker.h"
 
 struct master {
 
 	struct networkserver *networkserver;
-	struct iregioninfoset *set;
+	struct mastersideworkermanager *workermanager;
 };
 
 struct master *initmaster();

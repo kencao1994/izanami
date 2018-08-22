@@ -10,6 +10,8 @@
 int main() {
 
 	struct master *master = initmaster();
+	int i = 0;
+	i = 1;
 	waitmasterfinish(master);
 	return 0;
 }

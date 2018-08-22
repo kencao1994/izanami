@@ -35,7 +35,7 @@ izanami-master: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) izanami-master
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) izanami-master
 	-@echo ' '
 
 .PHONY: all clean dependents

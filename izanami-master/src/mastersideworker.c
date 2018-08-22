@@ -7,6 +7,7 @@
 
 #include "mastersideworker.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 int mastersideworkercmp(void *arg1, void *arg2) {
@@ -23,12 +24,26 @@ int mastersideworkercmp(void *arg1, void *arg2) {
 	return ret;
 }
 
-struct mastersideworker *initmastersideworker(configiregioninfoset config, char *ip, int port, int fd) {
+struct mastersideworker *initmastersideworker(configiregioninfoset config,
+		char *ip, int port, int fd) {
 
-	struct mastersideworker *instance = (struct mastersideworker *) malloc (sizeof(struct mastersideworker));
+	struct mastersideworker *instance = (struct mastersideworker *) malloc(
+			sizeof(struct mastersideworker));
 	instance->set = initiregioninfoset(config);
-	instance->ip = ip;
+//	instance->ip = ip;
 	instance->port = port;
 	instance->workerfd = fd;
 	return instance;
+}
+
+struct mastersideworkermanager *initmastersideworkermanager(
+		configworkermanager config) {
+
+	struct mastersideworkermanager *manager =
+			(struct mastersideworkermanager *) malloc(
+					sizeof(struct mastersideworkermanager));
+
+	config(manager);
+
+	return manager;
 }

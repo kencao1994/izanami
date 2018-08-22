@@ -8,17 +8,29 @@
 #ifndef MASTERSIDEWORKER_H_
 #define MASTERSIDEWORKER_H_
 
+#include "config.h"
 #include "iregioninfo.h"
 
 struct mastersideworker {
 
-	char *ip;
+	char ip[IZANAMI_MAX_IP_LEN];
 	int port;
 	int workerfd;
 	struct iregioninfoset *set;
 };
 
-int mastersideworkercmp(void *arg1, void *arg2);
-struct mastersideworker *initmastersideworker(configiregioninfoset config);
+struct mastersideworkermanager{
 
+	int maxworkernum;
+	int workernum;
+	struct mastersideworker *workers;
+};
+
+int mastersideworkercmp(void *arg1, void *arg2);
+
+struct mastersideworker *initmastersideworker(configiregioninfoset config, char *ip, int port, int fd);
+
+typedef void (*configworkermanager)(struct mastersideworkermanager *manager);
+
+struct mastersideworkermanager *initmastersideworkermanager(configworkermanager config);
 #endif /* MASTERSIDEWORKER_H_ */

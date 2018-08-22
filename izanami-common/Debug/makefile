@@ -35,7 +35,7 @@ libizanami-common.so: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(LIBRARIES) libizanami-common.so
+	-$(RM) $(LIBRARIES)$(OBJS)$(C_DEPS) libizanami-common.so
 	-@echo ' '
 
 .PHONY: all clean dependents

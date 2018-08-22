@@ -7,19 +7,22 @@ C_SRCS += \
 ../src/izanami-master.c \
 ../src/main.c \
 ../src/masterexecutor.c \
-../src/masteriregioninfo.c 
+../src/masteriregioninfo.c \
+../src/mastersideworker.c 
 
 OBJS += \
 ./src/izanami-master.o \
 ./src/main.o \
 ./src/masterexecutor.o \
-./src/masteriregioninfo.o 
+./src/masteriregioninfo.o \
+./src/mastersideworker.o 
 
 C_DEPS += \
 ./src/izanami-master.d \
 ./src/main.d \
 ./src/masterexecutor.d \
-./src/masteriregioninfo.d 
+./src/masteriregioninfo.d \
+./src/mastersideworker.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

@@ -1,12 +1,3 @@
-19:39:43 **** Incremental Build of configuration Debug for project izanami-master ****
-make all 
-make: 对“all”无需做任何事。
-19:39:49 **** Incremental Build of configuration Debug for project izanami-master ****
-make all 
-make: 对“all”无需做任何事。
-19:39:58 **** Incremental Build of configuration Debug for project izanami-worker ****
-make all 
-make: 对“all”无需做任何事。
-19:40:19 **** Incremental Build of configuration Debug for project izanami-worker ****
+21:23:33 **** Incremental Build of configuration Debug for project izanami-master ****
 make all 
 make: 对“all”无需做任何事。
