@@ -35,7 +35,7 @@ izanami-worker: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) izanami-worker
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) izanami-worker
 	-@echo ' '
 
 .PHONY: all clean dependents

@@ -8,14 +8,13 @@
 #include "iregioninfo.h"
 #include "masteriregioninfo.h"
 
-void recviregionfromworker(struct master *_master, int num, struct iregioninfo *regbuf) {
+void recviregionfromworker(struct iregioninfoset *set, int num, struct iregioninfo *regbuf) {
 
-//	int tmp = 0;
-//	struct iregioninfoset *set = _master->set;
-//	while (tmp < num) {
-//		readfromreport(set->infos + set->num, regbuf + tmp);
-//		set->num ++;
-//		tmp ++;
-//	}
+	int tmp = 0;
+	while (tmp < num) {
+		readfromreport(set->infos + set->num, regbuf + tmp);
+		set->num ++;
+		tmp ++;
+	}
 
 }

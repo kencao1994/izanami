@@ -13,6 +13,7 @@
 #include "iregioninfo.h"
 #include "izanami-master.h"
 #include "masterexecutor.h"
+#include "networkserver.h"
 
 #include <pthread.h>
 #include <stdio.h>
@@ -21,24 +22,24 @@
 void waitmasterfinish(struct master *_master) {
 
 	printf("waiting master to finish\n");
-//	pthread_join(_master->networkserver->serverthread, NULL);
+	pthread_join(_master->networkserver->serverthread, NULL);
 }
 
 void configmaster(struct networkserver *server) {
 
-//	dictionary *dict = getdict();
-//
-//	server->port = iniparser_getint(dict, IZANAMI_MASTER_PORT, 7000);
-//	server->eth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
-//	server->maxconn = iniparser_getint(dict, IZANAMI_MASTER_MAXCONN, 1024);
-//	server->executor = (struct executor*) initmasterexecutor();
-//
+	dictionary *dict = getdict();
+
+	server->port = iniparser_getint(dict, IZANAMI_MASTER_PORT, 7000);
+	server->eth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
+	server->maxconn = iniparser_getint(dict, IZANAMI_MASTER_MAXCONN, 1024);
+	server->executor = (struct executor*) initmasterexecutor();
+
 }
 
 void configmasterset(struct iregioninfoset *set) {
 
 	dictionary *dict = getdict();
-	set->maxnum  = iniparser_getint(dict, IZANAMI_WORKER_REGMAXNUM, 1024);
+	set->maxnum = iniparser_getint(dict, IZANAMI_WORKER_REGMAXNUM, 1024);
 	set->num = 0;
 }
 
@@ -57,13 +58,14 @@ void configmastersideworkermanager(struct mastersideworkermanager *manager) {
 	}
 }
 
-struct master * initmaster() {
+struct master *initmaster() {
 
 	struct master *_master = (struct master *) malloc(sizeof(struct master));
-//	_master->networkserver = initnetworkserver(configmaster);
-//	_master->set = initiregioninfoset(configmasterset);
-//	struct masterexecutor * executor = (struct masterexecutor *) _master->networkserver->executor;
- 		//	(struct masterexecutor *) (_master->networkserver->executor);
-//	executor->server = _master;
+	_master->networkserver = initnetworkserver(configmaster);
+	_master->workermanager = initmastersideworkermanager(
+			configmastersideworkermanager);
+	struct masterexecutor * executor =
+			(struct masterexecutor *) _master->networkserver->executor;
+	executor->server = _master;
 	return _master;
 }

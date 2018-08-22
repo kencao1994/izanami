@@ -31,6 +31,6 @@ int mastersideworkercmp(void *arg1, void *arg2);
 struct mastersideworker *initmastersideworker(configiregioninfoset config, char *ip, int port, int fd);
 
 typedef void (*configworkermanager)(struct mastersideworkermanager *manager);
-
 struct mastersideworkermanager *initmastersideworkermanager(configworkermanager config);
+struct mastersideworker *getmastersideworkerbyfd(struct mastersideworkermanager *manager, int fd);
 #endif /* MASTERSIDEWORKER_H_ */

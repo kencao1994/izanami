@@ -7,6 +7,7 @@
 
 #include "masterexecutor.h"
 #include "masteriregioninfo.h"
+#include "mastersideworker.h"
 #include "operation.h"
 
 #include <stdlib.h>
@@ -25,7 +26,9 @@ void masterexecute(void *this, int fd) {
 		int num = 0;
 		recv(fd, &num, sizeof(int), 0);
 		recv(fd, regbuf, sizeof(struct iregioninfo) * num, 0);
-		recviregionfromworker(_master, num, regbuf);
+
+		struct mastersideworker *worker = getmastersideworkerbyfd(_master->workermanager, fd);
+		recviregionfromworker(worker->set, num, regbuf);
 		break;
 	}
 	case assign: {
