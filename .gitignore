@@ -1,4 +1,10 @@
-RemoteSystemsTempFiles/
-.metadata/
+#C Files
 *.so
 *.o
+
+#Eclipse Files
+.classpath
+.project
+.settings/
+RemoteSystemsTempFiles/
+.metadata/

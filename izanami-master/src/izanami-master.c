@@ -40,8 +40,7 @@ void onmasterconnect(struct networkserver *server, struct epoll_event *event,
 				executor->server->workermanager, clientfd);
 
 		if (workeragent == NULL) {
-			addmastersideworker(executor->server->workermanager, addr,
-					clientfd);
+			addmastersideworker(executor->server->workermanager, clientfd);
 		}
 	}
 
@@ -89,5 +88,7 @@ struct master *initmaster() {
 	struct masterexecutor * executor =
 			(struct masterexecutor *) _master->networkserver->executor;
 	executor->server = _master;
+
+	setready();
 	return _master;
 }

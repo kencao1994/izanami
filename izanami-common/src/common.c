@@ -38,3 +38,14 @@ void readline(int fd, char *buf, int buflen) {
 	lseek(fd, seekindex - readcount + 1, SEEK_CUR);
 }
 
+static int ready = FALSE;
+
+void setready() {
+
+	ready = TRUE;
+}
+
+int getready() {
+
+	return ready;
+}

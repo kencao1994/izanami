@@ -31,6 +31,10 @@ void configworker(struct networkserver *server) {
 static enum operation reportop = report;
 void *initreportthread(void *args) {
 
+	while (!getready()) {
+		sleep(IZANAMI_READY_SLEEP_TIME);
+	}
+
 	struct worker *_worker = (struct worker *) args;
 	dictionary *dict = getdict();
 	int period = iniparser_getint(dict, IZANAMI_WORKER_REPORT_PERIOD, 10 * 60);
@@ -87,6 +91,8 @@ struct worker *initworker() {
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);
 
+
+	setready();
 	return _worker;
 }
 

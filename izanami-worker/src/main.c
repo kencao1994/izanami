@@ -13,8 +13,6 @@
 
 int main() {
 
-	srand(time(NULL));
-
 	struct worker *_worker = initworker();
 	waitworkerfinish(_worker);
 	return 0;

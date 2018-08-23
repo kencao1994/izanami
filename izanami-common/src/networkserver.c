@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "config.h"
 #include "networkserver.h"
 
 #include <arpa/inet.h>
@@ -18,6 +19,10 @@
 #include <unistd.h>
 
 void *startnetworkserver(void *arg) {
+
+	while (!getready()) {
+		sleep(IZANAMI_READY_SLEEP_TIME);
+	}
 
 	struct networkserver *server = arg;
 
