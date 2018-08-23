@@ -46,8 +46,8 @@ struct mastersideworkermanager *initmastersideworkermanager(
 	return manager;
 }
 
-
-struct mastersideworker *getmastersideworkerbyfd(struct mastersideworkermanager *manager, int fd) {
+struct mastersideworker *getmastersideworkerbyfd(
+		struct mastersideworkermanager *manager, int fd) {
 
 	struct mastersideworker *ret = NULL;
 	int tmp = 0;
@@ -57,7 +57,18 @@ struct mastersideworker *getmastersideworkerbyfd(struct mastersideworkermanager 
 			ret = worker;
 			break;
 		}
-		tmp ++;
+		tmp++;
 	}
 	return ret;
 }
+
+void addmastersideworker(struct mastersideworkermanager *manager,
+		struct sockaddr_in * addr, int fd) {
+
+	struct mastersideworker *worker = manager->workers + manager->workernum;
+	manager->workernum++;
+	worker->port = ntohs(addr->sin_port);
+	worker->workerfd = fd;
+	strcpy(worker->ip, inet_ntoa(addr->sin_addr));
+}
+

@@ -14,6 +14,9 @@
 #include <netinet/in.h>
 #include <sys/epoll.h>
 
+typedef void (*onconnect)(struct networkserver *server,
+		struct epoll_event *event, struct sockaddr_in *addr);
+
 struct networkserver {
 
 	int port;
@@ -21,6 +24,7 @@ struct networkserver {
 	int maxconn;
 	int serversock;
 	struct sockaddr_in server_addr;
+	onconnect connfun;
 
 	int epollfd;
 	struct epoll_event server, *requests;

@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "clienttype.h"
 #include "common.h"
 #include "config.h"
 #include "dictionary.h"
@@ -15,6 +16,7 @@
 #include "masterexecutor.h"
 #include "networkserver.h"
 
+#include <arpa/inet.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,6 +27,26 @@ void waitmasterfinish(struct master *_master) {
 	pthread_join(_master->networkserver->serverthread, NULL);
 }
 
+void onmasterconnect(struct networkserver *server, struct epoll_event *event,
+		struct sockaddr_in *addr) {
+
+	struct masterexecutor *executor = (struct masterexecutor *) server->executor;
+	int clientfd = event->data.fd;
+	enum clienttype type;
+	recv(clientfd, &type, sizeof(enum clienttype), 0);
+
+	if (type == worker) {
+		struct mastersideworker *workeragent = getmastersideworkerbyfd(
+				executor->server->workermanager, clientfd);
+
+		if (workeragent == NULL) {
+			addmastersideworker(executor->server->workermanager, addr,
+					clientfd);
+		}
+	}
+
+}
+
 void configmaster(struct networkserver *server) {
 
 	dictionary *dict = getdict();
@@ -33,7 +55,7 @@ void configmaster(struct networkserver *server) {
 	server->eth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
 	server->maxconn = iniparser_getint(dict, IZANAMI_MASTER_MAXCONN, 1024);
 	server->executor = (struct executor*) initmasterexecutor();
-
+	server->connfun = onmasterconnect;
 }
 
 void configmasterset(struct iregioninfoset *set) {

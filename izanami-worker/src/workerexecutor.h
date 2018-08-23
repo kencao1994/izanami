@@ -10,13 +10,12 @@
 
 #include "izanami-worker.h"
 
-struct workerexecutor{
+struct workerexecutor {
 
 	void (*execute)(void *this, int fd);
 	struct worker *server;
 };
 
 struct workerexecutor *initworkerexecutor();
-
 
 #endif /* WORKEREXECUTOR_H_ */

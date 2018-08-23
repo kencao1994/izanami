@@ -27,7 +27,8 @@ void masterexecute(void *this, int fd) {
 		recv(fd, &num, sizeof(int), 0);
 		recv(fd, regbuf, sizeof(struct iregioninfo) * num, 0);
 
-		struct mastersideworker *worker = getmastersideworkerbyfd(_master->workermanager, fd);
+		struct mastersideworker *worker = getmastersideworkerbyfd(
+				_master->workermanager, fd);
 		recviregionfromworker(worker->set, num, regbuf);
 		break;
 	}

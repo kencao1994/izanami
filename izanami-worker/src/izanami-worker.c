@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "clienttype.h"
 #include "common.h"
 #include "config.h"
 #include "dictionary.h"
@@ -27,13 +28,12 @@ void configworker(struct networkserver *server) {
 	server->executor = (struct executor*) initworkerexecutor();
 }
 
-
 static enum operation reportop = report;
 void *initreportthread(void *args) {
 
 	struct worker *_worker = (struct worker *) args;
 	dictionary *dict = getdict();
-	int period = iniparser_getint(dict, IZANAMI_WORKER_REPORT_PERIOD, 10);
+	int period = iniparser_getint(dict, IZANAMI_WORKER_REPORT_PERIOD, 10 * 60);
 
 	int masterport = iniparser_getint(dict, IZANAMI_MASTER_PORT, 7000);
 	char *mastereth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
@@ -45,6 +45,8 @@ void *initreportthread(void *args) {
 	addr.sin_addr.s_addr = inet_addr(mastereth);
 	connect(masterfd, &addr, sizeof(addr));
 
+	enum clienttype type = worker;
+	send(masterfd, &type, sizeof(type), 0);
 	while (TRUE) {
 
 		setiregioninfoset(_worker->set, _worker->datadir);
@@ -79,7 +81,8 @@ struct worker *initworker() {
 			"/izanami/data");
 
 	_worker->networkserver->executor = (struct executor *) initworkerexecutor();
-	((struct workerexecutor *)_worker->networkserver->executor)->server = _worker;
+	((struct workerexecutor *) _worker->networkserver->executor)->server =
+			_worker;
 
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);

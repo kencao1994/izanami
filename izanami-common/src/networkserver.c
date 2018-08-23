@@ -50,6 +50,9 @@ void *startnetworkserver(void *arg) {
 				ev.data.fd = infd;
 				ev.events = EPOLLIN;
 				epoll_ctl(server->epollfd, EPOLL_CTL_ADD, infd, &ev);
+				if (server->connfun != NULL) {
+					server->connfun(server, &ev, &in_addr);
+				}
 			} else {
 
 				server->executor->execute(server->executor, request.data.fd);
@@ -68,7 +71,7 @@ struct networkserver *initnetworkserver(networkserverconfig config) {
 		printf("初始化networkserver失败");
 		exit(EXIT_FAILURE);
 	}
-
+	server->connfun = NULL;
 	config(server);
 
 	memset(&(server->server_addr), 0, sizeof(struct sockaddr_in));

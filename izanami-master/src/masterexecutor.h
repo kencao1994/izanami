@@ -10,7 +10,7 @@
 
 #include "izanami-master.h"
 
-struct masterexecutor{
+struct masterexecutor {
 
 	void (*execute)(void *this, int fd);
 	struct master *server;

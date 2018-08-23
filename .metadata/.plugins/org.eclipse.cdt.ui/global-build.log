@@ -1,3 +1,102 @@
-23:22:33 **** Incremental Build of configuration Debug for project izanami-master ****
+20:49:28 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+20:49:47 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+make: 对“all”无需做任何事。
+20:50:02 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+20:58:11 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+make: 对“all”无需做任何事。
+20:58:33 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+Building file: ../src/izanami-worker.c
+Invoking: GCC C Compiler
+gcc -I/home/caojx/workspace/mydb/izanami-common/src -I/home/caojx/download/iniparser-master/src -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/izanami-worker.d" -MT"src/izanami-worker.d" -o "src/izanami-worker.o" "../src/izanami-worker.c"
+../src/izanami-worker.c: 在函数‘initreportthread’中:
+../src/izanami-worker.c:39:20: 警告：initialization discards ‘const’ qualifier from pointer target type [默认启用]
+  char *mastereth = iniparser_getstring(dict, IZANAMI_MASTER_ETH, "0.0.0.0");
+                    ^
+../src/izanami-worker.c:45:2: 警告：隐式声明函数‘inet_addr’ [-Wimplicit-function-declaration]
+  addr.sin_addr.s_addr = inet_addr(mastereth);
+  ^
+../src/izanami-worker.c:46:2: 警告：传递‘connect’的第 2 个参数时在不兼容的指针类型间转换 [默认启用]
+  connect(masterfd, &addr, sizeof(addr));
+  ^
+In file included from /usr/include/netinet/in.h:24:0,
+                 from /home/caojx/workspace/mydb/izanami-common/src/networkserver.h:14,
+                 from ../src/izanami-worker.h:11,
+                 from ../src/izanami-worker.c:14:
+/usr/include/sys/socket.h:138:12: 附注：需要类型‘const struct sockaddr *’，但实参的类型为‘struct sockaddr_in *’
+ extern int connect (int __fd, __CONST_SOCKADDR_ARG __addr, socklen_t __len);
+            ^
+../src/izanami-worker.c: 在函数‘initworker’中:
+../src/izanami-worker.c:80:19: 警告：assignment discards ‘const’ qualifier from pointer target type [默认启用]
+  _worker->datadir = iniparser_getstring(getdict(), IZANAMI_WORKER_DATADIR,
+                   ^
+Finished building: ../src/izanami-worker.c
+ 
+Building target: izanami-worker
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-worker"  ./src/izanami-worker.o ./src/main.o ./src/workerexecutor.o   -lizanami-common -liniparser -lpthread
+Finished building target: izanami-worker
+ 
+21:02:46 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+make: 对“all”无需做任何事。
+21:03:01 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:04:39 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:05:47 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:10:36 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+Building file: ../src/mastersideworker.c
+Invoking: GCC C Compiler
+gcc -I/home/caojx/workspace/mydb/izanami-common/src -I/home/caojx/download/iniparser-master/src -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/mastersideworker.d" -MT"src/mastersideworker.d" -o "src/mastersideworker.o" "../src/mastersideworker.c"
+Finished building: ../src/mastersideworker.c
+ 
+Building target: izanami-master
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-master"  ./src/izanami-master.o ./src/main.o ./src/masterexecutor.o ./src/masteriregioninfo.o ./src/mastersideworker.o   -lizanami-common -lpthread -liniparser
+Finished building target: izanami-master
+ 
+21:10:46 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:10:54 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:12:35 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:13:59 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+Building file: ../src/mastersideworker.c
+Invoking: GCC C Compiler
+gcc -I/home/caojx/workspace/mydb/izanami-common/src -I/home/caojx/download/iniparser-master/src -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/mastersideworker.d" -MT"src/mastersideworker.d" -o "src/mastersideworker.o" "../src/mastersideworker.c"
+Finished building: ../src/mastersideworker.c
+ 
+Building target: izanami-master
+Invoking: GCC C Linker
+gcc -L/home/caojx/workspace/mydb/izanami-common/Debug -L/home/caojx/download/iniparser-master -o "izanami-master"  ./src/izanami-master.o ./src/main.o ./src/masterexecutor.o ./src/masteriregioninfo.o ./src/mastersideworker.o   -lizanami-common -lpthread -liniparser
+Finished building target: izanami-master
+ 
+21:14:16 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:14:37 **** Incremental Build of configuration Debug for project izanami-master ****
+make all 
+make: 对“all”无需做任何事。
+21:14:59 **** Incremental Build of configuration Debug for project izanami-worker ****
+make all 
+make: 对“all”无需做任何事。
+21:15:49 **** Incremental Build of configuration Debug for project izanami-worker ****
 make all 
 make: 对“all”无需做任何事。

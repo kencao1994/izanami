@@ -11,6 +11,7 @@
 #include "iregioninfo.h"
 #include "izanami-master.h"
 
-void recviregionfromworker(struct iregioninfoset *set, int num, struct iregioninfo *regbuf);
+void recviregionfromworker(struct iregioninfoset *set, int num,
+		struct iregioninfo *regbuf);
 
 #endif /* MASTERIREGION_H_ */

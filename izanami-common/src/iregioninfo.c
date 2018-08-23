@@ -101,7 +101,7 @@ void setiregioninfoset(struct iregioninfoset *set, const char *filepath) {
 						int regionnamelen = strlen(filename);
 						filename[regionnamelen] = '/';
 						strcat(filename + regionnamelen + 1,
-								IZANAMI_REGION_BOUNDARY_FILE);
+						IZANAMI_REGION_BOUNDARY_FILE);
 						int fd = open(filename, O_RDONLY);
 
 						//初始化region相关信息
@@ -111,12 +111,12 @@ void setiregioninfoset(struct iregioninfoset *set, const char *filepath) {
 						readline(fd, info->endkey, IZANAMI_MAX_KEY_LEN);
 
 						memset(filename + tablenamelen, 0,
-								IZANAMI_MAX_LEN - tablenamelen);
+						IZANAMI_MAX_LEN - tablenamelen);
 						close(fd);
 					}
 				}
 				memset(filename + filepathlen, 0,
-						IZANAMI_MAX_LEN - filepathlen);
+				IZANAMI_MAX_LEN - filepathlen);
 				closedir(tabdir);
 			}
 		}
