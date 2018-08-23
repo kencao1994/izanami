@@ -91,7 +91,6 @@ struct worker *initworker() {
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);
 
-
 	setready();
 	return _worker;
 }

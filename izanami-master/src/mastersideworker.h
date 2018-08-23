@@ -33,6 +33,5 @@ struct mastersideworkermanager *initmastersideworkermanager(
 		configworkermanager config);
 struct mastersideworker *getmastersideworkerbyfd(
 		struct mastersideworkermanager *manager, int fd);
-void addmastersideworker(struct mastersideworkermanager *manager,
-		 int fd);
+void addmastersideworker(struct mastersideworkermanager *manager, int fd);
 #endif /* MASTERSIDEWORKER_H_ */

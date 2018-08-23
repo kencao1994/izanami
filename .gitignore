@@ -1,6 +1,6 @@
 #C Files
-*.so
-*.o
+Debug/*.so
+src/*.o
 
 #Eclipse Files
 .classpath

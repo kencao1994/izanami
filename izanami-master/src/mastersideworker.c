@@ -46,8 +46,7 @@ struct mastersideworker *getmastersideworkerbyfd(
 	return ret;
 }
 
-void addmastersideworker(struct mastersideworkermanager *manager,
-		 int fd) {
+void addmastersideworker(struct mastersideworkermanager *manager, int fd) {
 
 	struct mastersideworker *worker = manager->workers + manager->workernum;
 	manager->workernum++;
