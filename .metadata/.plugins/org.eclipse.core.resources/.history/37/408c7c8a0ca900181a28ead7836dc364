@@ -43,7 +43,7 @@ void masterexecute(void *this, int fd) {
 		recv(fd, tabnamebuf, IZANAMI_MAX_TAB_LEN, 0);
 		int splits = 0;
 		recv(fd, &splits, sizeof(int), 0);
-		char *keybuf = (char *) malloc(IZANAMI_MAX_KEY_LEN * splits);
+		char *keybuf = (char *) malloc( IZANAMI_MAX_KEY_LEN * splits );
 
 		docreatetable(_master, tabnamebuf, NULL);
 		free(keybuf);

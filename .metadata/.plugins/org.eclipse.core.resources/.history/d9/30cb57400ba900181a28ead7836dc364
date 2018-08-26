@@ -23,6 +23,7 @@ int tablenamecmp(void *arg1, void *arg2) {
 
 	struct tablename *tab1 = (struct tablename *) arg1;
 	struct tablename *tab2 = (struct tablename *) arg2;
+	void docreatetable(struct master *_master, char *tablename, char **splits);
 
 	return strcmp(tab1->name, tab2->name);
 }
@@ -53,7 +54,7 @@ void loadtablename(struct tablemanager *manager) {
 
 	dictionary *dict = getdict();
 	char *tablenamefile = iniparser_getstring(dict,
-			IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
+				IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
 	int fd = open(tablenamefile, O_RDWR);
 
 	int index = 0;
@@ -75,14 +76,15 @@ void loadtablename(struct tablemanager *manager) {
 }
 
 void savetablename(struct tablemanager *manager) {
+	void docreatetable(struct master *_master, char *tablename, char **splits);
 
 	dictionary *dict = getdict();
 	char *tablenamefile = iniparser_getstring(dict,
-			IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
+				IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
 	int fd = open(tablenamefile, O_RDWR);
 
 	int i = 0;
-	for (; i < manager->tablenum; i++) {
+	for(; i < manager->tablenum; i++) {
 		struct tablename *tab = manager->tables + i;
 		write(fd, tab->name, strlen(tab->name));
 		if (i != manager->tablenum) {
@@ -97,11 +99,11 @@ void inserttable(struct tablemanager *manager, char *table) {
 
 	if (exists(manager, table) == -1) {
 		struct tablename *name = manager->tables + manager->tablenum;
-		manager->tablenum++;
+		manager->tablenum ++;
 		strcpy(name->name, table);
 
 		qsort(manager->tables, manager->tablenum, sizeof(struct tablename),
-				tablenamecmp);
+					tablenamecmp);
 	} else {
 
 		printf("talbe with name [%s] exists \n", table);
