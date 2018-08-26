@@ -26,6 +26,11 @@
 #define IZANAMI_MASTER_TABLE_MAXNUM "master:maxtablenum"
 #define IZANAMI_MASTER_TABLE_NAMEFILE "master:tablenames"
 
+#define IZANAMI_MEMPOOL_MAXSIZE "mempool:maxsize"
+#define IZANAMI_MEMPOOL_BLOCKSIZE "mempool:blocksize"
+#define IZANAMI_MEMPOOL_METASIZE "mempool:metasize"
+#define IZANAMI_MEMPOOL_BLOCKDATASIZE "mempool:datasize"
+
 #define IZANAMI_REGION_NAME_LEN 32
 #define IZANAMI_REGION_BOUNDARY_FILE "boundary"
 

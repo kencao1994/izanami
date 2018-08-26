@@ -1,0 +1,50 @@
+/*
+ * skiplist.h
+ *
+ *  Created on: 2018年8月26日
+ *      Author: caojx
+ */
+
+#ifndef SKIPLIST_H_
+#define SKIPLIST_H_
+
+#include "workercommon.h"
+
+struct steaminode {
+
+	void *element;
+
+	void *pre;
+	void *post;
+	void *upper;
+	void *down;
+};
+
+typedef int (*elementcmp)(void *arg1, void* arg2);
+
+struct leafinode {
+
+	void *element;
+
+	void *pre;
+	void *post;
+};
+
+struct subskiplist {
+
+	struct steaminode *head;
+};
+
+struct skiplist {
+
+	int count;
+	int layer;
+	struct subskiplist *headlist;
+	elementcmp cmp;
+};
+
+struct skiplist *initskiplist(elementcmp cmp);
+
+struct leafinode *deletefromskiplist(struct skiplist, void *element);
+
+#endif /* SKIPLIST_H_ */

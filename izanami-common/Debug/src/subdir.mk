@@ -6,17 +6,23 @@
 C_SRCS += \
 ../src/common.c \
 ../src/iregioninfo.c \
-../src/networkserver.c 
+../src/mempool.c \
+../src/networkserver.c \
+../src/skiplist.c 
 
 OBJS += \
 ./src/common.o \
 ./src/iregioninfo.o \
-./src/networkserver.o 
+./src/mempool.o \
+./src/networkserver.o \
+./src/skiplist.o 
 
 C_DEPS += \
 ./src/common.d \
 ./src/iregioninfo.d \
-./src/networkserver.d 
+./src/mempool.d \
+./src/networkserver.d \
+./src/skiplist.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
