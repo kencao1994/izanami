@@ -10,7 +10,26 @@
 
 enum operation {
 
-	report, assign
+	/**
+	 * worker2master
+	 */
+	report,
+
+	/**
+	 * master2worker
+	 */
+	assign,
+
+	/**
+	 * client2master
+	 */
+	route,
+
+	/**
+	 * client2worker
+	 */
+	put,
+	scan
 };
 
 #endif /* OPERATION_H_ */

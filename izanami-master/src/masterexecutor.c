@@ -32,11 +32,12 @@ void masterexecute(void *this, int fd) {
 		recviregionfromworker(worker->set, num, regbuf);
 		break;
 	}
-	case assign: {
+	case route: {
+		getregioninfos(_master->workermanager, fd);
 		break;
 	}
 	default:
-		;
+		printf("no operation type in master");
 	}
 
 }

@@ -32,6 +32,7 @@ void onmasterconnect(struct networkserver *server, struct epoll_event *event,
 
 	struct masterexecutor *executor = (struct masterexecutor *) server->executor;
 	int clientfd = event->data.fd;
+	char *ip = inet_ntoa(addr->sin_addr);
 	enum clienttype type;
 	recv(clientfd, &type, sizeof(enum clienttype), 0);
 
@@ -40,7 +41,7 @@ void onmasterconnect(struct networkserver *server, struct epoll_event *event,
 				executor->server->workermanager, clientfd);
 
 		if (workeragent == NULL) {
-			addmastersideworker(executor->server->workermanager, clientfd);
+			addmastersideworker(executor->server->workermanager, clientfd, ip);
 		}
 	}
 
