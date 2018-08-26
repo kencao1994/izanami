@@ -28,7 +28,8 @@ enum operation {
 	/**
 	 * client2worker
 	 */
-	put, scan
+	put,
+	scan
 };
 
 #endif /* OPERATION_H_ */

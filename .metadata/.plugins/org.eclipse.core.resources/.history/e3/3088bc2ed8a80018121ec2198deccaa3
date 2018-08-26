@@ -62,7 +62,7 @@ void getregioninfos(struct mastersideworkermanager *manager, int fd) {
 			sizeof(struct mastersideworker) * count);
 
 	int i = 0;
-	for (; i < count; i++) {
+	for (; i < count; i ++) {
 
 		struct mastersideworker *tmp1 = worker + i;
 		struct mastersideworker *tmp2 = manager->workers + i;
