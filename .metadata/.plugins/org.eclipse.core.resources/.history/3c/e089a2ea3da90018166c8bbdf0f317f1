@@ -40,24 +40,44 @@ struct leafinode *deletefromskiplist(struct skiplist *list, void *element) {
 	return NULL;
 }
 
-int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
-		void *element, struct leafinode **result) {
+int findfromsubskiplist(struct skiplist *list, int layerlevel,
+		struct steaminode *start, void *element, struct leafinode **result) {
 
 	int step = 0;
-	struct leafinode *tmp = start;
-	struct leafinode *pre = tmp;
-	while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
-		step++;
-		tmp = tmp->post;
-		pre = tmp->pre;
-	}
+	if (list->layer == layerlevel) {
+		struct leafinode *tmp = start;
+		struct leafinode *pre = NULL;
+		while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
+			step ++;
+			tmp = tmp->post;
+			pre = tmp->pre;
+		}
 
-	if (tmp == NULL) {
-		*result = pre;
-	} else if (list->cmp(tmp->element, element) == 0) {
-		*result = tmp;
+		if (tmp == NULL) {
+			*result = pre;
+		} else if (list->cmp(tmp->element, element) == 0) {
+			*result = tmp;
+		} else {
+			*result = tmp->pre;
+		}
 	} else {
-		*result = tmp->pre;
+
+		struct steaminode *tmp = start;
+		struct steaminode *pre = NULL;
+		while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
+			step ++;
+			tmp = tmp->post;
+			pre = tmp->pre;
+		}
+
+		if (tmp == NULL) {
+			findfromsubskiplist(list, layerlevel +1, pre, element, result);
+		} else if (list->cmp(tmp->element, element) == 0) {
+			findfromsubskiplist(list, layerlevel + 1, tmp, element, result);
+		} else {
+			findfromsubskiplist(list, layerlevel + 1, tmp->pre, element, result);
+		}
+
 	}
 
 	return step;
@@ -65,15 +85,7 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 
 struct leafinode *findfromskiplist(struct skiplist *list, void *element) {
 
-	int level = 0;
-	struct steaminode *start = list->routenode;
-	struct steaminode *tmp = NULL;
-	for (; level < list->layer; level ++) {
-		findfromsubskiplist(list, start, element, &tmp);
-		start = tmp->down;
-	}
-
-	return tmp;
+	return NULL;
 }
 
 struct leafinode *insertintoskiplist(struct skiplist *list, void *element) {

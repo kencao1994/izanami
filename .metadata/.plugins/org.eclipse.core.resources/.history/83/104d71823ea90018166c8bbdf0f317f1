@@ -65,15 +65,7 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 
 struct leafinode *findfromskiplist(struct skiplist *list, void *element) {
 
-	int level = 0;
-	struct steaminode *start = list->routenode;
-	struct steaminode *tmp = NULL;
-	for (; level < list->layer; level ++) {
-		findfromsubskiplist(list, start, element, &tmp);
-		start = tmp->down;
-	}
-
-	return tmp;
+	return NULL;
 }
 
 struct leafinode *insertintoskiplist(struct skiplist *list, void *element) {

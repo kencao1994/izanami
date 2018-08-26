@@ -73,7 +73,7 @@ struct leafinode *findfromskiplist(struct skiplist *list, void *element) {
 		start = tmp->down;
 	}
 
-	return tmp;
+	return NULL;
 }
 
 struct leafinode *insertintoskiplist(struct skiplist *list, void *element) {
