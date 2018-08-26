@@ -90,6 +90,13 @@ struct master *initmaster() {
 			(struct masterexecutor *) _master->networkserver->executor;
 	executor->server = _master;
 
+	_master->tabmanager = inittablemanager();
+
 	setready();
 	return _master;
+}
+
+void docreatetable(struct master *_master, char *tablename, char **splits) {
+
+	inserttable(_master->tabmanager, tablename);
 }

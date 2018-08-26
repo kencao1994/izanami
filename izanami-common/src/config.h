@@ -23,6 +23,9 @@
 #define IZANAMI_MASTER_MAXCONN "master:maxconn"
 #define IZANAMI_MASTER_MAXWORKER "master:maxworker"
 
+#define IZANAMI_MASTER_TABLE_MAXNUM "master:maxtablenum"
+#define IZANAMI_MASTER_TABLE_NAMEFILE "master:tablenames"
+
 #define IZANAMI_REGION_NAME_LEN 32
 #define IZANAMI_REGION_BOUNDARY_FILE "boundary"
 

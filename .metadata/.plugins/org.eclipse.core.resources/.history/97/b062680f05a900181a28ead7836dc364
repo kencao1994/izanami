@@ -1,0 +1,106 @@
+/*
+ * tablemanager.c
+ *
+ *  Created on: 2018年8月26日
+ *      Author: caojx
+ */
+
+#include "common.h"
+#include "config.h"
+#include "tablemanager.h"
+
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+void settablename(struct tablename *tablename, const char *name) {
+
+	strcpy(tablename->name, name);
+}
+
+int tablenamecmp(void *arg1, void *arg2) {
+
+	struct tablename *tab1 = (struct tablename *) arg1;
+	struct tablename *tab2 = (struct tablename *) arg2;
+
+	return strcmp(tab1->name, tab2->name);
+}
+
+struct tablemanager *inittablemanager() {
+
+	dictionary *dict = getdict();
+	struct tablemanager *manager = (struct tablemanager *) malloc(
+			sizeof(struct tablemanager));
+	manager->maxtablenum = iniparser_getint(dict, IZANAMI_MASTER_TABLE_MAXNUM,
+			1024);
+	manager->tablenum = 0;
+	manager->tables = (struct tablename *) malloc(
+			sizeof(struct tablename) * manager->maxtablenum);
+
+	char *tablenamefile = iniparser_getstring(dict,
+			IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
+	manager->dumpfile = open(tablenamefile, O_RDWR);
+
+	loadtablename(manager);
+	return manager;
+}
+
+int halffind(void *arr, int size, int left, int right, void *target,
+		int (*cmp)(void *arg1, void *arg2)) {
+
+	if (left == right) {
+		if (cmp(arr + left * size, target)) {
+			return -1;
+		} else {
+			return left;
+		}
+	} else if (left > right) {
+		return -1;
+	}
+
+	int mid = (left + right) / 2;
+	int ret = cmp(arr + mid * size, target);
+	if (ret > 0) {
+		return halffind(arr, size, left, mid - 1, target, cmp);
+	} else if (ret < 0) {
+		return halffind(arr, size, mid + 1, right, target, cmp);
+	} else {
+		return mid;
+	}
+}
+
+int exists(struct tablemanager *manager, struct tablename *table) {
+
+	return halffind(manager->tables, sizeof(struct tablename), 0,
+			manager->tablenum, table, tablenamecmp);
+}
+
+static char namebuf[IZANAMI_MAX_TAB_LEN];
+void loadtablename(struct tablemanager *manager) {
+
+	int index = 0;
+	do {
+		readline(manager->dumpfile, namebuf, IZANAMI_MAX_TAB_LEN);
+		if (strlen(namebuf) == 0 || manager->tablenum >= manager->maxtablenum) {
+			break;
+		}
+
+		struct tablename *name = manager->tables + index;
+		manager->tablenum++;
+		settablename(name, namebuf);
+		index++;
+	} while (TRUE);
+
+	close(manager->dumpfile);
+	qsort(manager->tables, manager->tablenum, sizeof(struct tablename),
+			tablenamecmp);
+}
+
+void savetablename(struct tablemanager *manager) {
+
+}
+
+void inserttable(struct tablemanager *manager, struct tablename *table) {
+
+}

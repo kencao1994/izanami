@@ -46,7 +46,7 @@ void *startnetworkserver(void *arg) {
 			if (request.data.fd == server->serversock) {
 
 				struct sockaddr_in in_addr;
-				socklen_t in_len;
+				socklen_t in_len = sizeof(struct sockaddr_in);
 				int infd;
 
 				infd = accept(server->serversock, (struct sockaddr *) &in_addr,

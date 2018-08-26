@@ -1,13 +1,13 @@
-src/masterexecutor.d: ../src/masterexecutor.c ../src/masterexecutor.h \
+src/masterexecutor.d: ../src/masterexecutor.c \
+ /home/caojx/workspace/mydb/izanami-common/src/config.h \
  ../src/izanami-master.h \
  /home/caojx/workspace/mydb/izanami-common/src/iregioninfo.h \
  /home/caojx/workspace/mydb/izanami-common/src/config.h \
- ../src/mastersideworker.h \
- /home/caojx/workspace/mydb/izanami-common/src/config.h \
+ ../src/mastersideworker.h ../src/tablemanager.h ../src/masterexecutor.h \
  ../src/masteriregioninfo.h \
  /home/caojx/workspace/mydb/izanami-common/src/operation.h
 
-../src/masterexecutor.h:
+/home/caojx/workspace/mydb/izanami-common/src/config.h:
 
 ../src/izanami-master.h:
 
@@ -17,7 +17,9 @@ src/masterexecutor.d: ../src/masterexecutor.c ../src/masterexecutor.h \
 
 ../src/mastersideworker.h:
 
-/home/caojx/workspace/mydb/izanami-common/src/config.h:
+../src/tablemanager.h:
+
+../src/masterexecutor.h:
 
 ../src/masteriregioninfo.h:
 

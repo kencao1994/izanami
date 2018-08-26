@@ -25,5 +25,7 @@ dictionary *getdict();
 void readline(int fd, char *buf, int buflen);
 void setready();
 int getready();
+int halffind(void *arr, int size, int left, int right, void *target,
+		int (*cmp)(void *arg1, void *arg2));
 
 #endif /* SRC_COMMON_H_ */

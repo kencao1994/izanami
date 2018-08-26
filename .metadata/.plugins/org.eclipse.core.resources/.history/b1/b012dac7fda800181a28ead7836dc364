@@ -1,0 +1,73 @@
+/*
+ * tablemanager.c
+ *
+ *  Created on: 2018年8月26日
+ *      Author: caojx
+ */
+
+#include "common.h"
+#include "config.h"
+#include "tablemanager.h"
+
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+struct tablename *inittablename(const char *tablename) {
+
+	struct tablename *name = (struct tablename *) malloc(
+			sizeof(struct tablename));
+	strcpy(name->name, tablename);
+	return name;
+}
+
+int tablenamecmp(void *arg1, void *arg2) {
+
+	struct tablename *tab1 = (struct tablename *) arg1;
+	struct tablename *tab2 = (struct tablename *) arg2;
+
+	return strcmp(tab1->name, tab2->name);
+}
+
+struct tablemanager *inittablemanager() {
+
+	dictionary *dict = getdict();
+	struct tablemanager *manager = (struct tablemanager *) malloc(
+			sizeof(struct tablemanager));
+	manager->maxtablenum = iniparser_getint(dict, IZANAMI_MASTER_TABLE_MAXNUM,
+			1024);
+	manager->tablenum = 0;
+	manager->tables = (struct tablename *) malloc(
+			sizeof(struct tablename) * manager->maxtablenum);
+
+	char *tablenamefile = iniparser_getstring(dict,
+			IZANAMI_MASTER_TABLE_NAMEFILE, "tablenames");
+	manager->dumpfile = open(tablenamefile, O_RDWR);
+
+	return manager;
+}
+
+int exists(struct tablemanager *manager, struct tablename *table) {
+
+	return 1;
+}
+
+static char namebuf[IZANAMI_MAX_TAB_LEN];
+void loadtablename(struct tablemanager *manager) {
+
+	do {
+		readline(manager->dumpfile, namebuf, IZANAMI_MAX_TAB_LEN);
+
+		if (strlen(namebuf) == 0) {
+			break;
+		}
+	} while (TRUE);
+}
+
+void savetablename(struct tablemanager *manager) {
+
+}
+
+void inserttable(struct tablemanager *manager, struct tablename *table) {
+}

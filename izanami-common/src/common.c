@@ -27,7 +27,7 @@ void readline(int fd, char *buf, int buflen) {
 	int readcount = read(fd, buf, buflen);
 	if (readcount == 0) {
 		printf("no lines left\n");
-		exit(-1);
+		return;
 	}
 	int seekindex = 0;
 	while (*ptr != NEXTLINE) {
@@ -48,4 +48,28 @@ void setready() {
 int getready() {
 
 	return ready;
+}
+
+int halffind(void *arr, int size, int left, int right, void *target,
+		int (*cmp)(void *arg1, void *arg2)) {
+
+	if (left == right) {
+		if (cmp(arr + left * size, target)) {
+			return -1;
+		} else {
+			return left;
+		}
+	} else if (left > right) {
+		return -1;
+	}
+
+	int mid = (left + right) / 2;
+	int ret = cmp(arr + mid * size, target);
+	if (ret > 0) {
+		return halffind(arr, size, left, mid - 1, target, cmp);
+	} else if (ret < 0) {
+		return halffind(arr, size, mid + 1, right, target, cmp);
+	} else {
+		return mid;
+	}
 }

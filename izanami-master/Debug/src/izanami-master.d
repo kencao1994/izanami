@@ -9,7 +9,7 @@ src/izanami-master.d: ../src/izanami-master.c \
  /home/caojx/download/iniparser-master/src/dictionary.h \
  /home/caojx/workspace/mydb/izanami-common/src/iregioninfo.h \
  /home/caojx/workspace/mydb/izanami-common/src/config.h \
- ../src/izanami-master.h ../src/mastersideworker.h \
+ ../src/izanami-master.h ../src/mastersideworker.h ../src/tablemanager.h \
  ../src/masterexecutor.h \
  /home/caojx/workspace/mydb/izanami-common/src/networkserver.h \
  /home/caojx/workspace/mydb/izanami-common/src/executor.h
@@ -37,6 +37,8 @@ src/izanami-master.d: ../src/izanami-master.c \
 ../src/izanami-master.h:
 
 ../src/mastersideworker.h:
+
+../src/tablemanager.h:
 
 ../src/masterexecutor.h:
 
