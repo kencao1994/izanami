@@ -28,15 +28,17 @@ void returnblock(struct mempool *pool, struct blockinfo *info);
 
 struct memconsumer {
 
-	struct blockinfo *firstblock;
-	struct blockinfo *currentblock;
+	void *firstblock;
+	void *currentblock;
 };
+
 
 struct consumerhead {
 
 	int dataused;
 	struct blockinfo *next;
 };
+
 void setconsumerhead(struct consumerhead *head);
 struct memconsumer *initmemconsumer();
 void *imalloc(struct memconsumer *consumer, int size);

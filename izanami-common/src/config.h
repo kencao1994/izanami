@@ -33,8 +33,10 @@
 
 #define IZANAMI_REGION_NAME_LEN 32
 #define IZANAMI_REGION_BOUNDARY_FILE "boundary"
-
 #define IZANAMI_READY_SLEEP_TIME 1
+
+#define IZANAMI_SKIPLIST_MAXSKIP "skiplist:maxskip"
+#define IZANAMI_SKIPLIST_MAXLAYER "skiplist:maxlayers"
 
 #define IZANAMI_WORKER_ETH "worker:eth"
 #define IZANAMI_WORKER_PORT "worker:port"

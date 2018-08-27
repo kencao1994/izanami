@@ -14,6 +14,9 @@
 #include <stdlib.h>
 
 static struct mempool *pool = NULL;
+static int blocksize = 0;
+static int metasize = 0;
+static int datasize = 0;
 
 int blockinfocmp(void *arg1, void *arg2) {
 
@@ -22,22 +25,40 @@ int blockinfocmp(void *arg1, void *arg2) {
 	return info1->ptr - info2->ptr;
 }
 
+struct memconsumer *getemptyconsumer(void *block) {
+
+	struct consumerhead *head = (struct consumerhead *)block;
+	setconsumerhead(head);
+
+	struct memconsumer *tmp = (struct memconsumer *) malloc(sizeof(struct memconsumer));
+	tmp->currentblock = tmp->firstblock = block;
+	return tmp;
+}
+
 struct mempool *getmempool() {
 
 	if (pool == NULL) {
 		dictionary *dict = getdict();
 		long poolsize = iniparser_getlongint(dict, IZANAMI_MEMPOOL_MAXSIZE,
 				1204 * 1024 * 1024);
-		int blocksize = iniparser_getint(dict, IZANAMI_MEMPOOL_BLOCKSIZE,
-				1024 * 1024);
+		blocksize = iniparser_getint(dict, IZANAMI_MEMPOOL_BLOCKSIZE,
+				1024 * 64);
+		metasize = iniparser_getint(dict, IZANAMI_MEMPOOL_METASIZE, 1024 * 4);
+		datasize = blocksize - metasize;
 
 		pool = (struct mempool *) malloc(sizeof(struct mempool));
 		pool->start = malloc(sizeof(poolsize));
 		pool->freelist = initskiplist(blockinfocmp);
 		pool->usedlist = initskiplist(blockinfocmp);
 
+		struct memconsumer *freeconsumer = getemptyconsumer(pool->start);
+		struct memconsumer *usedconsumer = getemptyconsumer(pool->start +  blocksize);
+
+		setconsumer(pool->freelist, freeconsumer);
+		setconsumer(pool->usedlist, usedconsumer);
+
 		int count = poolsize / blocksize;
-		int i = 0;
+		int i = 2;
 		for (; i < count; i++) {
 			insertintoskiplist(pool->freelist, pool->start + i * blocksize);
 		}
@@ -85,6 +106,7 @@ void returnblock(struct mempool *pool, struct blockinfo *info) {
 }
 
 void setconsumerhead(struct consumerhead *head) {
+
 	head->dataused = 0;
 	head->next = NULL;
 }
@@ -103,15 +125,13 @@ struct memconsumer *initmemconsumer() {
 void *imalloc(struct memconsumer *consumer, int size) {
 
 	struct consumerhead *head = consumer->currentblock;
-	dictionary *dict = getdict();
-	int datasize = iniparser_getint(dict, IZANAMI_MEMPOOL_BLOCKDATASIZE,
-			1024 * 1000);
-	int metasize = iniparser_getint(dict, IZANAMI_MEMPOOL_METASIZE, 1024 * 24);
+	int beforeallocate;
 
 	if (head->dataused + size < datasize) {
+		beforeallocate = head->dataused;
 		head->dataused += size;
 	} else {
-
+		beforeallocate = 0;
 		struct blockinfo *info = getblock(getmempool());
 		head->next = info;
 		head = info;
@@ -119,6 +139,6 @@ void *imalloc(struct memconsumer *consumer, int size) {
 		head->dataused += size;
 	}
 
-	return head + metasize + head->dataused;
+	return head + metasize + beforeallocate;
 }
 
