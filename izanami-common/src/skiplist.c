@@ -67,7 +67,7 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 	int step = 0;
 	struct leafinode *tmp = (struct leafinode *) start;
 	struct leafinode *pre = tmp;
-	while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
+	while (tmp != NULL && tmp->element != NULL && list->cmp(tmp->element, element) < 0) {
 		step++;
 		tmp = tmp->post;
 		pre = tmp->pre;

@@ -6,6 +6,7 @@
 C_SRCS += \
 ../src/common.c \
 ../src/iregioninfo.c \
+../src/memconsumer.c \
 ../src/mempool.c \
 ../src/networkserver.c \
 ../src/skiplist.c 
@@ -13,6 +14,7 @@ C_SRCS += \
 OBJS += \
 ./src/common.o \
 ./src/iregioninfo.o \
+./src/memconsumer.o \
 ./src/mempool.o \
 ./src/networkserver.o \
 ./src/skiplist.o 
@@ -20,6 +22,7 @@ OBJS += \
 C_DEPS += \
 ./src/common.d \
 ./src/iregioninfo.d \
+./src/memconsumer.d \
 ./src/mempool.d \
 ./src/networkserver.d \
 ./src/skiplist.d 

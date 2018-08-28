@@ -10,11 +10,6 @@
 
 #include "workercommon.h"
 
-struct blockinfo {
-
-	void *ptr;
-};
-
 struct mempool {
 
 	void *start;
@@ -26,21 +21,8 @@ struct mempool *getmempool();
 struct blockinfo *getblock(struct mempool *pool);
 void returnblock(struct mempool *pool, struct blockinfo *info);
 
-struct memconsumer {
-
-	void *firstblock;
-	void *currentblock;
-};
-
-
-struct consumerhead {
-
-	int dataused;
-	struct blockinfo *next;
-};
-
-void setconsumerhead(struct consumerhead *head);
-struct memconsumer *initmemconsumer();
-void *imalloc(struct memconsumer *consumer, int size);
+int getblocksize();
+int getmetasize();
+int getdatasize();
 
 #endif /* MEMPOOL_H_ */
