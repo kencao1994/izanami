@@ -1,6 +1,6 @@
-00:25:02 **** Incremental Build of configuration Debug for project izanami-common ****
+12:56:37 **** Incremental Build of configuration Debug for project izanami-common ****
 make all 
 make: 对“all”无需做任何事。
 
-00:25:02 Build Finished (took 72ms)
+12:56:37 Build Finished (took 79ms)
 

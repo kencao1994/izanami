@@ -9,6 +9,7 @@
 #include "config.h"
 #include "dictionary.h"
 #include "iniparser.h"
+#include "memconsumer.h"
 #include "mempool.h"
 #include "skiplist.h"
 
@@ -191,7 +192,7 @@ void setconsumer(struct skiplist *list, struct memconsumer *consumer) {
 
 	list->consumer = consumer;
 	list->routenode = imalloc(list->consumer, sizeof(struct steaminode));
-	printf("start route is %p\n", list->routenode);
+//	printf("start route is %p\n", list->routenode);
 //	printf("%p:%p:%p:%p", list->routenode->down, list->routenode->element, list->routenode->post, list->routenode->pre);
 	setsteaminode(list->routenode);
 }

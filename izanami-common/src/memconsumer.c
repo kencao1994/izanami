@@ -32,9 +32,8 @@ struct memconsumer *initmemconsumer() {
 
 void *imalloc(struct memconsumer *consumer, int size) {
 
-	struct consumerblock *head = consumer->currentblock;
+	struct consumerblock *head = (struct consumerblock *)consumer->currentblock;
 	int beforeallocate;
-
 	if (head->dataused + size < getdatasize()) {
 		beforeallocate = head->dataused;
 		head->dataused += size;
@@ -47,5 +46,5 @@ void *imalloc(struct memconsumer *consumer, int size) {
 		head->dataused += size;
 	}
 
-	return (void *)((long)consumer->currentblock + getmetasize() + beforeallocate);
+	return (void *)head + getmetasize() + beforeallocate;
 }
