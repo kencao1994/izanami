@@ -5,5 +5,6 @@ src/*.o
 #Eclipse Files
 .classpath
 .project
+.metadata/
 .settings/
 RemoteSystemsTempFiles/
