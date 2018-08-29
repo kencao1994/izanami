@@ -22,7 +22,6 @@
 #define IZANAMI_MASTER_PORT "master:port"
 #define IZANAMI_MASTER_MAXCONN "master:maxconn"
 #define IZANAMI_MASTER_MAXWORKER "master:maxworker"
-
 #define IZANAMI_MASTER_TABLE_MAXNUM "master:maxtablenum"
 #define IZANAMI_MASTER_TABLE_NAMEFILE "master:tablenames"
 
