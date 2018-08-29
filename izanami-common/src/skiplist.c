@@ -72,7 +72,7 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 	if (tmp->element == NULL && tmp->post == NULL) {
 
 		*result = tmp;
-		return 0;
+		return 1;
 	}
 
 	while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
@@ -125,6 +125,7 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 
 	struct leafinode *nodebefore = NULL;
 	int step = findfromsubskiplist(list, start, element, &nodebefore);
+	*closestnode = nodebefore;
 
 	if (level == list->layer) {
 		int ret = list->cmp(nodebefore->element, element);
