@@ -59,4 +59,6 @@ struct leafinode *findfromskiplist(struct skiplist *list, void *element);
  */
 struct leafinode *insertintoskiplist(struct skiplist *list, void *element);
 
+void insertbefore(void *arg1, void *arg2);
+
 #endif /* SKIPLIST_H_ */
