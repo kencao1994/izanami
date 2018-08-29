@@ -68,17 +68,10 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 	int step = 0;
 	struct leafinode *tmp = (struct leafinode *) start;
 	struct leafinode *pre = tmp;
-	//该层没有元素 返回第一个头元素
-	if (tmp->element == NULL && tmp->post == NULL) {
-
-		*result = tmp;
-		return 0;
-	}
-
-	while (tmp != NULL && list->cmp(tmp->element, element) < 0) {
+	while (tmp != NULL && tmp->element != NULL && list->cmp(tmp->element, element) < 0) {
 		step++;
-		pre = tmp;
 		tmp = tmp->post;
+		pre = tmp->pre;
 	}
 
 	if (tmp == NULL) {
