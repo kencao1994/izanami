@@ -61,7 +61,7 @@ struct mempool *getmempool() {
 		int poolsize = iniparser_getint(dict, IZANAMI_MEMPOOL_MAXSIZE,
 				1024 * 1024 * 1024);
 		blocksize = iniparser_getint(dict, IZANAMI_MEMPOOL_BLOCKSIZE,
-				16 * 1024);
+				64 * 1024);
 		metasize = iniparser_getint(dict, IZANAMI_MEMPOOL_METASIZE, 1024 * 4);
 		datasize = blocksize - metasize;
 
@@ -104,8 +104,18 @@ struct leafinode *getfirst(struct skiplist *list) {
 
 void insertinodeintoskiplist(struct skiplist *list, struct leafinode *inode) {
 
-	struct leafinode *prenode = findfromskiplist(list, inode->element);
+	struct steaminode *upperinode = findfromskiplistbylevel(list, inode->element, list->layer - 1);
+	struct leafinode *prenode = NULL;
+	int step = 0;
+	if (upperinode == NULL) {
+		prenode = findfromskiplist(list, inode->element);
+	} else {
+		step = findfromsubskiplist(list, upperinode->down, inode->element, &prenode);
+	}
 	insertbefore(prenode, inode);
+	if (upperinode != NULL && step == 0) {
+		upperinode->down = inode;
+	}
 	//	inode->post = prenode->post;
 //	inode->pre = prenode;
 //	prenode->post->pre = inode;

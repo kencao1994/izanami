@@ -13,7 +13,7 @@
 
 void setconsumerhead(struct consumerblock *head) {
 
-//	memset(head, 0, getblocksize());
+	memset(head, 0, getblocksize());
 
 	head->dataused = 0;
 	head->next = NULL;

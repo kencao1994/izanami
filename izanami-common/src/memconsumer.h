@@ -12,8 +12,8 @@
 
 struct memconsumer {
 
-	void *firstblock;
-	void *currentblock;
+	struct consumerblock *firstblock;
+	struct consumerblock *currentblock;
 };
 
 void setconsumerhead(struct consumerblock *block);

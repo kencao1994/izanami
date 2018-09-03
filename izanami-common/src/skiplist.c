@@ -57,9 +57,38 @@ void setrepeatable(struct skiplist *list) {
 	list->repeatable = TRUE;
 }
 
+void deletefromsublist(struct skiplist *list, struct steaminode *uppernode,
+		struct leafinode *start, void *element, int level,
+		struct leafinode **result) {
+
+	struct leafinode *prenode = NULL;
+	findfromsubskiplist(list, start, element, &prenode);
+	if (list->layer == level) {
+
+		if (prenode != NULL && list->cmp(prenode->element, element) == 0) {
+
+			prenode->post->pre = prenode->pre;
+			prenode->pre->post = prenode->post;
+			if (uppernode != NULL && uppernode->element != NULL) {
+				uppernode->down = prenode->post;
+			}
+			*result = prenode;
+		}
+	} else {
+
+		deletefromsublist(list, prenode, ((struct steaminode *) prenode)->down,
+				element, level + 1, result);
+	}
+
+}
+
 struct leafinode *deletefromskiplist(struct skiplist *list, void *element) {
 
-	return NULL;
+	struct leafinode *ret = NULL;
+
+	deletefromsublist(list, NULL, list->routenode, element, 1, &ret);
+
+	return ret;
 }
 
 int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
@@ -81,11 +110,17 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 		tmp = tmp->post;
 	}
 
-	if (tmp == NULL) {
+	if (step == 0) {
+		//最小
+		*result = pre->pre;
+	} else if (tmp == NULL) {
+		//最大
 		*result = pre;
 	} else if (list->cmp(tmp->element, element) == 0) {
+		//刚好匹配
 		*result = tmp;
 	} else {
+		//没有正好匹配，也不是最小或者最大返回前一个
 		*result = tmp->pre;
 	}
 
@@ -94,16 +129,23 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 
 struct leafinode *findfromskiplist(struct skiplist *list, void *element) {
 
-	int level = 0;
+	return (struct leafinode *) findfromskiplistbylevel(list, element, list->layer);
+}
+
+struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element, int level) {
+
+	int tmplevel = 0;
 	struct steaminode *start = list->routenode;
 	struct steaminode *tmp = NULL;
-	for (; level < list->layer; level++) {
+	while (tmplevel != level && tmplevel < list->layer) {
 		findfromsubskiplist(list, start, element, (struct leafinode **) &tmp);
 		start = tmp->down;
+		tmplevel ++;
 	}
 
 	return (struct leafinode *) tmp;
 }
+
 
 void insertbefore(void *arg1, void *arg2) {
 
@@ -156,6 +198,7 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 
 			newinode->element = element;
 			newinode->down = node;
+			*closestnode = newinode;
 		}
 	}
 
@@ -194,7 +237,6 @@ struct leafinode *insertintoskiplist(struct skiplist *list, void *element) {
 
 	return ret;
 }
-
 
 void setconsumer(struct skiplist *list, struct memconsumer *consumer) {
 
