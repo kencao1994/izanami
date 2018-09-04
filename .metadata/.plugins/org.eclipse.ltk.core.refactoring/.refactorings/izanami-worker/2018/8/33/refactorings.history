@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;izanami-worker/src/ianami-worker.c&apos; to &apos;izanami-worker.c&apos;" description="Rename resource &apos;ianami-worker.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/ianami-worker.c" name="izanami-worker.c" stamp="1534077266927" updateReferences="true"/>
-</session>

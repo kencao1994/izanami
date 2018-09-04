@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;izanami-master/src/masteriregion.h&apos; to &apos;masteriregioninfo.h&apos;" description="Rename resource &apos;masteriregion.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/masteriregion.h" name="masteriregioninfo.h" stamp="1534417870351" updateReferences="true"/>
-</session>
