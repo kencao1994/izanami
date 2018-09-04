@@ -172,7 +172,7 @@ void insertbefore(void *arg1, void *arg2) {
 
 int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 		void *element, struct leafinode **result, int level,
-		struct leafinode **closestnode) {
+		struct leafinode **closestnode, struct leafinode *targetnode) {
 
 	struct leafinode *nodebefore = NULL;
 	int step = findfromsubskiplist(list, start, element, &nodebefore);
@@ -181,12 +181,14 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 	if (level == list->layer) {
 		int ret = list->cmp(nodebefore->element, element);
 		if (ret != 0 || list->repeatable) {
-			struct leafinode *inode = imalloc(list->consumer,
+			struct leafinode *inode = targetnode;
+			if (inode ==NULL) {
+			inode = imalloc(list->consumer,
 					sizeof(struct leafinode));
-
 			setleafinode(inode);
-			insertbefore(nodebefore, inode);
 			inode->element = element;
+			}
+			insertbefore(nodebefore, inode);
 			*result = inode;
 			*closestnode = inode;
 		}
@@ -195,7 +197,7 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 		struct leafinode *node = NULL;
 		int ret = insertintosubskiplist(list,
 				((struct steaminode *) nodebefore)->down, element, result,
-				level + 1, &node);
+				level + 1, &node, targetnode);
 
 		if (ret > maxskip && result != NULL) {
 			struct steaminode *newinode = imalloc(list->consumer,
@@ -214,12 +216,12 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 	return step;
 }
 
-struct leafinode *insertintoskiplist(struct skiplist *list, void *element) {
+struct leafinode *insertintoskiplist(struct skiplist *list, void *element, struct leafinode *targetnode) {
 
 	struct leafinode *ret = NULL;
 	struct leafinode *closest = NULL;
 	int step = insertintosubskiplist(list, list->routenode, element, &ret, 1,
-			&closest);
+			&closest, targetnode);
 
 	if (ret != NULL) {
 		list->count++;

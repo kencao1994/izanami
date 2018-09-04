@@ -81,7 +81,7 @@ struct mempool *getmempool() {
 		int count = poolsize / blocksize;
 		int i = 2;
 		for (; i < count; i++) {
-			insertintoskiplist(pool->freelist, pool->start + i * blocksize);
+			insertintoskiplist(pool->freelist, pool->start + i * blocksize, NULL);
 			void *start = pool->start + i * blocksize;
 			setconsumerhead(start);
 		}
@@ -106,25 +106,23 @@ struct leafinode *getfirst(struct skiplist *list) {
 
 void insertinodeintoskiplist(struct skiplist *list, struct leafinode *inode) {
 
-	struct steaminode *upperinode = findfromskiplistbylevel(list,
-			inode->element, list->layer - 1);
-	struct leafinode *prenode = NULL;
-	int step = 0;
-	if (upperinode == NULL) {
-		prenode = findfromskiplist(list, inode->element);
-	} else {
-		step = findfromsubskiplist(list, upperinode->down, inode->element,
-				&prenode);
-	}
-	list->count++;
-	insertbefore(prenode, inode);
-	if (upperinode != NULL && step == 0) {
-		upperinode->down = inode;
-	}
-	//	inode->post = prenode->post;
-//	inode->pre = prenode;
-//	prenode->post->pre = inode;
-//	prenode->post = inode;
+	insertintoskiplist(list, inode->element, inode);
+
+//	struct steaminode *upperinode = findfromskiplistbylevel(list,
+//			inode->element, list->layer - 1);
+//	struct leafinode *prenode = NULL;
+//	int step = 0;
+//	if (upperinode == NULL) {
+//		prenode = findfromskiplist(list, inode->element);
+//	} else {
+//		step = findfromsubskiplist(list, upperinode->down, inode->element,
+//				&prenode);
+//	}
+//	list->count++;
+//	insertbefore(prenode, inode);
+//	if (upperinode != NULL && step == 0) {
+//		upperinode->down = inode;
+//	}
 }
 
 struct blockinfo *getblock(struct mempool *pool) {
