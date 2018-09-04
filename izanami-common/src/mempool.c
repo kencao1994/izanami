@@ -37,19 +37,20 @@ int getdatasize() {
 
 int blockinfocmp(void *arg1, void *arg2) {
 
-	if(arg1 == arg2) {
+	if (arg1 == arg2) {
 		return 0;
 	}
-	int ret = (arg1 > arg2) ? 1 :-1;
+	int ret = (arg1 > arg2) ? 1 : -1;
 	return ret;
 }
 
 struct memconsumer *getemptyconsumer(void *block) {
 
-	struct consumerblock *head = (struct consumerblock *)block;
+	struct consumerblock *head = (struct consumerblock *) block;
 	setconsumerhead(head);
 
-	struct memconsumer *tmp = (struct memconsumer *) malloc(sizeof(struct memconsumer));
+	struct memconsumer *tmp = (struct memconsumer *) malloc(
+			sizeof(struct memconsumer));
 	tmp->currentblock = tmp->firstblock = block;
 	return tmp;
 }
@@ -73,7 +74,8 @@ struct mempool *getmempool() {
 		struct memconsumer *freeconsumer = getemptyconsumer(pool->start);
 		setconsumer(pool->freelist, freeconsumer);
 
-		struct memconsumer *usedconsumer = getemptyconsumer(pool->start +  blocksize);
+		struct memconsumer *usedconsumer = getemptyconsumer(
+				pool->start + blocksize);
 		setconsumer(pool->usedlist, usedconsumer);
 
 		int count = poolsize / blocksize;
@@ -104,14 +106,17 @@ struct leafinode *getfirst(struct skiplist *list) {
 
 void insertinodeintoskiplist(struct skiplist *list, struct leafinode *inode) {
 
-	struct steaminode *upperinode = findfromskiplistbylevel(list, inode->element, list->layer - 1);
+	struct steaminode *upperinode = findfromskiplistbylevel(list,
+			inode->element, list->layer - 1);
 	struct leafinode *prenode = NULL;
 	int step = 0;
 	if (upperinode == NULL) {
 		prenode = findfromskiplist(list, inode->element);
 	} else {
-		step = findfromsubskiplist(list, upperinode->down, inode->element, &prenode);
+		step = findfromsubskiplist(list, upperinode->down, inode->element,
+				&prenode);
 	}
+	list->count++;
 	insertbefore(prenode, inode);
 	if (upperinode != NULL && step == 0) {
 		upperinode->down = inode;

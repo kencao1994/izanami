@@ -88,6 +88,10 @@ struct leafinode *deletefromskiplist(struct skiplist *list, void *element) {
 
 	deletefromsublist(list, NULL, list->routenode, element, 1, &ret);
 
+	if (ret != NULL) {
+		list->count--;
+	}
+
 	return ret;
 }
 
@@ -110,11 +114,15 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 		tmp = tmp->post;
 	}
 
-	if (step == 0) {
-		//最小
+	if (step == 0 && list->cmp(tmp->element, element) == 0) {
+		//等于最小
+		*result = pre;
+	} else if (step == 0) {
+		//小于最小
 		*result = pre->pre;
-	} else if (tmp == NULL) {
-		//最大
+	}
+	if (tmp == NULL) {
+		//大于最大
 		*result = pre;
 	} else if (list->cmp(tmp->element, element) == 0) {
 		//刚好匹配
@@ -129,10 +137,12 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 
 struct leafinode *findfromskiplist(struct skiplist *list, void *element) {
 
-	return (struct leafinode *) findfromskiplistbylevel(list, element, list->layer);
+	return (struct leafinode *) findfromskiplistbylevel(list, element,
+			list->layer);
 }
 
-struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element, int level) {
+struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element,
+		int level) {
 
 	int tmplevel = 0;
 	struct steaminode *start = list->routenode;
@@ -140,12 +150,11 @@ struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element, 
 	while (tmplevel != level && tmplevel < list->layer) {
 		findfromsubskiplist(list, start, element, (struct leafinode **) &tmp);
 		start = tmp->down;
-		tmplevel ++;
+		tmplevel++;
 	}
 
 	return (struct leafinode *) tmp;
 }
-
 
 void insertbefore(void *arg1, void *arg2) {
 

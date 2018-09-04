@@ -55,8 +55,8 @@ struct leafinode *deletefromskiplist(struct skiplist *list, void *element);
  */
 struct leafinode *findfromskiplist(struct skiplist *list, void *element);
 
-
-struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element, int level);
+struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element,
+		int level);
 /**
  * 返回指向插入inode的指针
  */
