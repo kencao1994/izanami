@@ -9,6 +9,7 @@
 #define MEMCONSUMER_H_
 
 #include "block.h"
+#include "workercommon.h"
 
 struct memconsumer {
 

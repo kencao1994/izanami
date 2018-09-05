@@ -9,6 +9,7 @@
 #define WORKERCOMMON_H_
 
 struct mempool;
+struct memconsumer;
 struct skiplist;
 struct leafinode;
 struct steaminode;

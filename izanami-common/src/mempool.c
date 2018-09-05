@@ -82,7 +82,7 @@ struct mempool *getmempool() {
 		int i = 2;
 		for (; i < count; i++) {
 			insertintoskiplist(pool->freelist, pool->start + i * blocksize,
-					NULL);
+			NULL);
 			void *start = pool->start + i * blocksize;
 			setconsumerhead(start);
 		}
@@ -109,8 +109,13 @@ void insertinodeintoskiplist(struct skiplist *list, struct leafinode *inode) {
 
 	insertintoskiplist(list, inode->element, inode);
 
-//	struct steaminode *upperinode = findfromskiplistbylevel(list,
-//			inode->element, list->layer - 1);
+	struct steaminode *upperinode = findfromskiplistbylevel(list,
+			inode->element, list->layer - 1);
+
+	if (upperinode != NULL
+			&& list->cmp(upperinode->down->element, inode->element) > 0) {
+		upperinode->down = inode;
+	}
 //	struct leafinode *prenode = NULL;
 //	int step = 0;
 //	if (upperinode == NULL) {

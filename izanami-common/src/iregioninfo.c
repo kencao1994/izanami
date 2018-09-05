@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "common.h"
 #include "config.h"
 #include "iregioninfo.h"
 
