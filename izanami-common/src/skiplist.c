@@ -67,7 +67,9 @@ void deletefromsublist(struct skiplist *list, struct steaminode *uppernode,
 
 		if (prenode != NULL && list->cmp(prenode->element, element) == 0) {
 
+			if (prenode->post != NULL) {
 			prenode->post->pre = prenode->pre;
+			}
 			prenode->pre->post = prenode->post;
 			if (uppernode != NULL && uppernode->element != NULL) {
 				uppernode->down = prenode->post;

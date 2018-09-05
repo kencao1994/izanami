@@ -20,5 +20,6 @@ struct memconsumer {
 void setconsumerhead(struct consumerblock *block);
 struct memconsumer *initmemconsumer();
 void *imalloc(struct memconsumer *consumer, int size);
+void destroyconsumer(struct memconsumer *consumer);
 
 #endif /* MEMCONSUMER_H_ */

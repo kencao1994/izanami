@@ -49,3 +49,17 @@ void *imalloc(struct memconsumer *consumer, int size) {
 
 	return (void *) head + getmetasize() + beforeallocate;
 }
+
+void destroyconsumer(struct memconsumer *consumer) {
+
+	struct mempool *pool = getmempool();
+	struct consumerblock *block = consumer->firstblock;
+
+	while (block != NULL) {
+
+		returnblock(pool, block);
+		block = block->next;
+	}
+
+	free(consumer);
+}
