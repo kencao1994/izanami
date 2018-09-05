@@ -60,7 +60,8 @@ struct leafinode *findfromskiplistbylevel(struct skiplist *list, void *element,
 /**
  * 返回指向插入inode的指针
  */
-struct leafinode *insertintoskiplist(struct skiplist *list, void *element, struct leafinode *targetnode);
+struct leafinode *insertintoskiplist(struct skiplist *list, void *element,
+		struct leafinode *targetnode);
 
 void insertbefore(void *arg1, void *arg2);
 

@@ -81,7 +81,8 @@ struct mempool *getmempool() {
 		int count = poolsize / blocksize;
 		int i = 2;
 		for (; i < count; i++) {
-			insertintoskiplist(pool->freelist, pool->start + i * blocksize, NULL);
+			insertintoskiplist(pool->freelist, pool->start + i * blocksize,
+					NULL);
 			void *start = pool->start + i * blocksize;
 			setconsumerhead(start);
 		}

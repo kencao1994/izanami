@@ -120,8 +120,7 @@ int findfromsubskiplist(struct skiplist *list, struct steaminode *start,
 	} else if (step == 0) {
 		//小于最小
 		*result = pre->pre;
-	}
-	if (tmp == NULL) {
+	} else if (tmp == NULL) {
 		//大于最大
 		*result = pre;
 	} else if (list->cmp(tmp->element, element) == 0) {
@@ -182,11 +181,10 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 		int ret = list->cmp(nodebefore->element, element);
 		if (ret != 0 || list->repeatable) {
 			struct leafinode *inode = targetnode;
-			if (inode ==NULL) {
-			inode = imalloc(list->consumer,
-					sizeof(struct leafinode));
-			setleafinode(inode);
-			inode->element = element;
+			if (inode == NULL) {
+				inode = imalloc(list->consumer, sizeof(struct leafinode));
+				setleafinode(inode);
+				inode->element = element;
 			}
 			insertbefore(nodebefore, inode);
 			*result = inode;
@@ -216,7 +214,8 @@ int insertintosubskiplist(struct skiplist *list, struct steaminode *start,
 	return step;
 }
 
-struct leafinode *insertintoskiplist(struct skiplist *list, void *element, struct leafinode *targetnode) {
+struct leafinode *insertintoskiplist(struct skiplist *list, void *element,
+		struct leafinode *targetnode) {
 
 	struct leafinode *ret = NULL;
 	struct leafinode *closest = NULL;
