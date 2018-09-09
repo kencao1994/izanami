@@ -36,4 +36,6 @@ void getval(struct icell *icell, char *buf);
 long generatemvcc();
 struct icell *randicellfromcousumer(struct memconsumer *consumer);
 void setmvcc(struct icell *icell, long mvcc);
+void printicell(struct icell *icell);
+
 #endif /* ICELL_H_ */

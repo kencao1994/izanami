@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "block.h"
 #include "common.h"
 #include "config.h"
 #include "dictionary.h"
@@ -258,3 +259,57 @@ void setconsumer(struct skiplist *list, struct memconsumer *consumer) {
 //	printf("%p:%p:%p:%p", list->routenode->down, list->routenode->element, list->routenode->post, list->routenode->pre);
 	setsteaminode(list->routenode);
 }
+
+struct fileblockbuf *initfileblockbuf(void *buf) {
+
+	struct fileblockbuf *ret = (struct fileblockbuf *)buf;
+
+	memset(ret, 0, getfileblocksize());
+	ret->dataused = 0;
+	ret->icellcount = 0;
+	return ret;
+}
+
+void destroyfileblockbuf(struct fileblockbuf *buf) {
+
+	free(buf);
+}
+
+void tolocalfile(struct skiplist *list, int fd) {
+
+	struct steaminode *head = list->routenode;
+
+	while (head->down != NULL) {
+		head = head->down;
+	}
+
+	struct leafinode *start = head->post;
+	struct fileblockbuf *buf = initfileblockbuf(malloc(getfileblocksize()));
+
+	while (start != NULL) {
+
+		if (buf->dataused +  icellsize(start->element) > (getfileblocksize() - getfileblockmetasize())) {
+
+			write(fd, buf, getfileblocksize());
+			destroyfileblockbuf(buf);
+			buf = initfileblockbuf(malloc(getfileblocksize()));
+		}
+
+		char *to = (char *)buf + getmetasize() + buf->dataused;
+		char *from = (char *) start->element;
+
+		int cnt = icellsize(start->element);
+		int i = 0;
+		for(; i < cnt; i++) {
+			to[i] = from[i];
+		}
+		buf->dataused += icellsize(start->element);
+		buf->icellcount ++;
+		start = start->post;
+	}
+	write(fd, buf, getfileblocksize());
+	destroyfileblockbuf(buf);
+}
+
+
+

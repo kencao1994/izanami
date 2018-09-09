@@ -73,3 +73,15 @@ int halffind(void *arr, int size, int left, int right, void *target,
 		return mid;
 	}
 }
+
+int getfileblocksize() {
+
+	dictionary *dict = getdict();
+	return iniparser_getint(dict, IZANAMI_FILE_BLOCKSIZE, 1024 * 1024);
+}
+
+int getfileblockmetasize() {
+
+	dictionary *dict = getdict();
+	return iniparser_getint(dict, IZANAMI_FILE_BLOCKMETASIZE, 4 * 1024);
+}

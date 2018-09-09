@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "block.h"
 #include "config.h"
 #include "icell.h"
 
@@ -120,9 +121,9 @@ void randstr(char *buf, int len) {
 
 struct icell *randicellfromcousumer(struct memconsumer *consumer) {
 
-	short keylen = rand() % 10 + 10;
-	short collen = 5;
-	short vallen = rand() % 100 + 20;
+	short keylen = 1;
+	short collen = 2;
+	short vallen = 5;
 
 	int total = keylen + collen + vallen + 3 * sizeof(short) + sizeof(long);
 	struct icell *cell = imalloc(consumer, total);
@@ -144,4 +145,15 @@ void setmvcc(struct icell *icell, long mvcc) {
 
 	*(long *) ((void *) icell + icellheadlen(icell) + icell->collen
 			+ icell->vallen + icell->keylen) = mvcc;
+}
+
+void printicell(struct icell *icell) {
+
+	char colbuf[IZANAMI_MAX_LEN];
+	char valbuf[IZANAMI_MAX_LEN];
+	char keybuf[IZANAMI_MAX_LEN];
+	getcol(icell, colbuf);
+	getval(icell, valbuf);
+	getkey(icell, keybuf);
+	printf("col:%s val:%s key:%s mvcc:%ld\n", colbuf, valbuf, keybuf, getmvcc(icell));
 }

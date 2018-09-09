@@ -65,4 +65,6 @@ struct leafinode *insertintoskiplist(struct skiplist *list, void *element,
 
 void insertbefore(void *arg1, void *arg2);
 
+void tolocalfile(struct skiplist *list, int fd);
+
 #endif /* SKIPLIST_H_ */
