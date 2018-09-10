@@ -4,16 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../src/ifile.c \
 ../src/izanami-worker.c \
 ../src/main.c \
 ../src/workerexecutor.c 
 
 OBJS += \
+./src/ifile.o \
 ./src/izanami-worker.o \
 ./src/main.o \
 ./src/workerexecutor.o 
 
 C_DEPS += \
+./src/ifile.d \
 ./src/izanami-worker.d \
 ./src/main.d \
 ./src/workerexecutor.d 
