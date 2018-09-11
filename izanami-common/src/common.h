@@ -29,5 +29,6 @@ int halffind(void *arr, int size, int left, int right, void *target,
 		int (*cmp)(void *arg1, void *arg2));
 int getfileblocksize();
 int getfileblockmetasize();
+void cpywithlen(char *to, char *from, int len);
 
 #endif /* SRC_COMMON_H_ */

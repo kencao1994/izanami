@@ -9,7 +9,9 @@
 #define READACTION_H_
 
 #include "config.h"
+#include "icell.h"
 #include "ifile.h"
+#include "skiplist.h"
 
 enum readtype {
 
@@ -17,12 +19,37 @@ enum readtype {
 	scan
 };
 
+typedef void (*seek)(void *reader, struct icell *icell);
+typedef struct icell* (*iterate)(void *reader);
+
+struct reader {
+
+	struct icell *current;
+	void *nextreader;
+	seek seekfun;
+	iterate iteratefun;
+};
+
 struct filereader {
+
+	struct icell *current;
+	void *nextreader;
+	seek seekfun;
+	iterate iteratefun;
 
 	int fd;
 	char *buf;
-	struct filereader *nextreader;
 	struct ifile *ifile;
+};
+
+struct memreader {
+
+	struct icell *currnet;
+	void *nextreader;
+	seek seekfun;
+	iterate iteratefun;
+
+	struct leafinode *inode;
 };
 
 struct readaction {
@@ -30,10 +57,14 @@ struct readaction {
 	int clientfd;
 	enum readtype type;
 	int filereadercnt;
+	struct iregion *iregion;
+
 	struct filereader *readers;
+	struct memreader *memreader;
+	struct reader *readerlist;
 };
 
-struct readaction *initreadaction(const char *dirname, int clientfd);
+struct readaction *initreadaction(struct iregion *iregion, int clientfd);
 void doread(struct readaction *action);
 void cleanaction(struct readaction *action);
 

@@ -85,3 +85,12 @@ int getfileblockmetasize() {
 	dictionary *dict = getdict();
 	return iniparser_getint(dict, IZANAMI_FILE_BLOCKMETASIZE, 4 * 1024);
 }
+
+void cpywithlen(char *to, char *from, int len) {
+
+	int i = 0;
+	while (i  < len) {
+		to[i] = from[i];
+		i++;
+	}
+}

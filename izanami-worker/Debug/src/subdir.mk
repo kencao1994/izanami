@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/ifile.c \
+../src/iregion.c \
 ../src/izanami-worker.c \
 ../src/main.c \
 ../src/readaction.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 
 OBJS += \
 ./src/ifile.o \
+./src/iregion.o \
 ./src/izanami-worker.o \
 ./src/main.o \
 ./src/readaction.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 C_DEPS += \
 ./src/ifile.d \
+./src/iregion.d \
 ./src/izanami-worker.d \
 ./src/main.d \
 ./src/readaction.d \
