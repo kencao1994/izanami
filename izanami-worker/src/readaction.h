@@ -27,12 +27,13 @@ struct filereader {
 
 struct readaction {
 
+	int clientfd;
 	enum readtype type;
 	int filereadercnt;
 	struct filereader *readers;
 };
 
-struct readaction *initreadaction(const char *dirname);
+struct readaction *initreadaction(const char *dirname, int clientfd);
 void doread(struct readaction *action);
 void cleanaction(struct readaction *action);
 

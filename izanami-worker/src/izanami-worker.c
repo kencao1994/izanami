@@ -9,6 +9,7 @@
 #include "common.h"
 #include "config.h"
 #include "dictionary.h"
+#include "ifile.h"
 #include "iniparser.h"
 #include "iregioninfo.h"
 #include "izanami-worker.h"
@@ -76,6 +77,14 @@ void configworkerset(struct iregioninfoset* set) {
 	set->num = 0;
 }
 
+static struct ifilemanager *ifilemanager = NULL;
+void _configifilemanager(struct ifilemanager *manager) {
+
+	manager->filecnt = 0;
+	manager->maxfilecnt = iniparser_getint(getdict(), IZANAMI_FILE_MAXNUM, 100);
+	manager->files = malloc(manager->maxfilecnt * sizeof(struct ifile));
+}
+
 struct worker *initworker() {
 
 	struct worker *_worker = (struct worker *) malloc(sizeof(struct worker));
@@ -91,6 +100,8 @@ struct worker *initworker() {
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);
 
+	_worker->filemanager = ifilemanager = initifilemanager(_configifilemanager);
+
 	setready();
 	return _worker;
 }
@@ -100,3 +111,9 @@ void waitworkerfinish(struct worker *_worker) {
 	printf("waiting worker to finish\n");
 	pthread_join(_worker->networkserver->serverthread, NULL);
 }
+
+struct ifilemanager *getifilemanager() {
+
+	return ifilemanager;
+}
+
