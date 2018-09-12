@@ -53,6 +53,12 @@ struct skiplist *initskiplist(elementcmp cmp) {
 	return list;
 }
 
+void destroyskiplist(struct skiplist *list) {
+
+	destroyconsumer(list->consumer);
+	free(list);
+}
+
 void setrepeatable(struct skiplist *list) {
 
 	list->repeatable = TRUE;

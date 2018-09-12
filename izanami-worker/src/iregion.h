@@ -26,6 +26,7 @@ struct iregion {
 void inserticell(struct iregion *iregion, struct icell *icell);
 void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager);
 int iregioncmp(void *arg1, void *arg2);
+void loadiregion(struct iregion *iregion, struct iregioninfo *info);
 
 struct iregionmanager {
 
@@ -35,6 +36,4 @@ struct iregionmanager {
 };
 
 struct iregionmanager *initiregionmanager(struct iregioninfoset *set);
-struct iregion *initiregion(const char *dirname);
-
 #endif /* IREGION_H_ */

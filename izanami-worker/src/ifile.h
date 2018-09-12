@@ -9,6 +9,7 @@
 #define IFILE_H_
 
 #include "config.h"
+#include "izanami-worker.h"
 
 enum ifilestatus {
 
@@ -36,9 +37,10 @@ struct ifilemanager {
 
 typedef void (*configifilemanager)(struct ifilemanager *manager);
 
-struct ifilemanager *initifilemanager(configifilemanager config);
+struct ifilemanager *initifilemanager(struct worker *worker, configifilemanager config);
 struct ifile *initifile(struct ifilemanager *manager, const char *filename);
 void deleteifile(struct ifilemanager *manager, struct ifile *file);
 struct iflie *getifiles(struct ifilemanager *manager, const char *dirname);
+char *getrandfilename();
 
 #endif /* IFILE_H_ */

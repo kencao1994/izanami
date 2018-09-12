@@ -67,4 +67,6 @@ void insertbefore(void *arg1, void *arg2);
 
 void tolocalfile(struct skiplist *list, int fd);
 
+void destroyskiplist(struct skiplist *list);
+
 #endif /* SKIPLIST_H_ */

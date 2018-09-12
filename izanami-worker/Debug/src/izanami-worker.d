@@ -3,11 +3,9 @@ src/izanami-worker.d: ../src/izanami-worker.c \
  /home/caojx/workspace/mydb/izanami-common/src/common.h \
  /home/caojx/download/iniparser-master/src/dictionary.h \
  /home/caojx/workspace/mydb/izanami-common/src/config.h ../src/ifile.h \
- /home/caojx/download/iniparser-master/src/iniparser.h \
- /home/caojx/download/iniparser-master/src/dictionary.h \
+ ../src/izanami-worker.h ../src/iregion.h \
  /home/caojx/workspace/mydb/izanami-common/src/iregioninfo.h \
  /home/caojx/workspace/mydb/izanami-common/src/config.h \
- ../src/izanami-worker.h ../src/iregion.h \
  /home/caojx/workspace/mydb/izanami-common/src/memconsumer.h \
  /home/caojx/workspace/mydb/izanami-common/src/block.h \
  /home/caojx/workspace/mydb/izanami-common/src/workercommon.h \
@@ -15,6 +13,8 @@ src/izanami-worker.d: ../src/izanami-worker.c \
  /home/caojx/workspace/mydb/izanami-common/src/networkserver.h \
  /home/caojx/workspace/mydb/izanami-common/src/common.h \
  /home/caojx/workspace/mydb/izanami-common/src/executor.h \
+ /home/caojx/download/iniparser-master/src/iniparser.h \
+ /home/caojx/download/iniparser-master/src/dictionary.h \
  /home/caojx/workspace/mydb/izanami-common/src/operation.h \
  ../src/workerexecutor.h
 
@@ -28,17 +28,13 @@ src/izanami-worker.d: ../src/izanami-worker.c \
 
 ../src/ifile.h:
 
-/home/caojx/download/iniparser-master/src/iniparser.h:
+../src/izanami-worker.h:
 
-/home/caojx/download/iniparser-master/src/dictionary.h:
+../src/iregion.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/iregioninfo.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/config.h:
-
-../src/izanami-worker.h:
-
-../src/iregion.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/memconsumer.h:
 
@@ -53,6 +49,10 @@ src/izanami-worker.d: ../src/izanami-worker.c \
 /home/caojx/workspace/mydb/izanami-common/src/common.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/executor.h:
+
+/home/caojx/download/iniparser-master/src/iniparser.h:
+
+/home/caojx/download/iniparser-master/src/dictionary.h:
 
 /home/caojx/workspace/mydb/izanami-common/src/operation.h:
 

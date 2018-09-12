@@ -146,3 +146,26 @@ struct iregioninfoset *initiregioninfoset(configiregioninfoset fn) {
 	return set;
 }
 
+static char dirname[IZANAMI_MAX_LEN] = {'\0'};
+char *getregiondir(struct iregioninfo *info) {
+
+	memset(dirname, 0, IZANAMI_MAX_LEN);
+
+	int cnt = 0;
+	dictionary *dict = getdict();
+	char *datadir = iniparser_getstring(dict, IZANAMI_WORKER_DATADIR, "/tmp/data");
+	cpywithlen(dirname, datadir, strlen(datadir));
+	cnt += strlen(datadir);
+	cpywithlen(dirname + cnt, IZANAMI_DELIMITER, strlen(IZANAMI_DELIMITER));
+	cnt += strlen(IZANAMI_DELIMITER);
+	cpywithlen(dirname + cnt, info->tablename, strlen(info->tablename));
+	cnt += strlen(info->tablename);
+	cpywithlen(dirname + cnt, IZANAMI_DELIMITER, strlen(IZANAMI_DELIMITER));
+	cnt += strlen(IZANAMI_DELIMITER);
+	cpywithlen(dirname + cnt, info->regionname, strlen(info->regionname));
+	cnt += strlen(info->regionname);
+	cpywithlen(dirname + cnt, IZANAMI_DELIMITER, strlen(IZANAMI_DELIMITER));
+	cnt += strlen(IZANAMI_DELIMITER);
+
+	return dirname;
+}

@@ -10,7 +10,7 @@
 
 #include <stdlib.h>
 
-struct ifilemanager *initifilemanager(configifilemanager config) {
+struct ifilemanager *initifilemanager(struct worker *worker, configifilemanager config) {
 
 	struct ifilemanager *manager = (struct ifilemanager *) malloc(
 			sizeof(struct ifilemanager));

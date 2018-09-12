@@ -46,8 +46,11 @@
 #define IZANAMI_WORKER_DATADIR "worker:datadir"
 
 #define IZANAMI_FILE_MAXLEN 1024
+#define IZANAMI_FILE_LEN 16
 #define IZANAMI_FILE_MAXNUM "file:maxnum"
 #define IZANAMI_FILE_BLOCKSIZE "file:blocksize"
 #define IZANAMI_FILE_BLOCKMETASIZE "file:blockmetasize"
+
+#define IZANAMI_DELIMITER "/"
 
 #endif /* SRC_CONFIG_H_ */
