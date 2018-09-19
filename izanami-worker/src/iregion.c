@@ -23,7 +23,6 @@ void inserticell(struct iregion *iregion, struct icell *icell) {
 	insertintoskiplist(iregion->memstore, buf, NULL);
 }
 
-
 static char filename[IZANAMI_MAX_LEN];
 void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager) {
 
@@ -53,6 +52,7 @@ void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager) {
 	tolocalfile(tmp, fd);
 	destroyskiplist(tmp);
 	//增加新的ifile
+	initifile(filemanager, filename);
 
 	close(fd);
 }

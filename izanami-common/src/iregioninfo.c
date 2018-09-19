@@ -150,7 +150,6 @@ static char dirname[IZANAMI_MAX_LEN] = {'\0'};
 char *getregiondir(struct iregioninfo *info) {
 
 	memset(dirname, 0, IZANAMI_MAX_LEN);
-
 	int cnt = 0;
 	dictionary *dict = getdict();
 	char *datadir = iniparser_getstring(dict, IZANAMI_WORKER_DATADIR, "/tmp/data");
@@ -168,4 +167,15 @@ char *getregiondir(struct iregioninfo *info) {
 	cnt += strlen(IZANAMI_DELIMITER);
 
 	return dirname;
+}
+
+static char datadir[IZANAMI_MAX_LEN] = {'\0'};
+static char *DATA = "/data";
+
+char *getregiondatadir(const char *regiondir) {
+
+	memset(datadir, 0, IZANAMI_MAX_LEN);
+	strcpy(datadir, regiondir);
+	strcpy(datadir + strlen(datadir), DATA);
+	return datadir;
 }

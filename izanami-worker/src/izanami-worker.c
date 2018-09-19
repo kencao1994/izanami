@@ -78,11 +78,12 @@ void configworkerset(struct iregioninfoset* set) {
 }
 
 static struct ifilemanager *ifilemanager = NULL;
+static struct iregionmanager *iregionmanager = NULL;
+
 void _configifilemanager(struct ifilemanager *manager) {
 
 	manager->filecnt = 0;
 	manager->maxfilecnt = iniparser_getint(getdict(), IZANAMI_FILE_MAXNUM, 100);
-	manager->files = malloc(manager->maxfilecnt * sizeof(struct ifile));
 }
 
 struct worker *initworker() {
@@ -101,7 +102,7 @@ struct worker *initworker() {
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);
 
 	_worker->filemanager = ifilemanager = initifilemanager(_worker, _configifilemanager);
-
+	_worker->regionmanager = iregionmanager = initiregionmanager(_worker->set);
 	setready();
 	return _worker;
 }
@@ -117,3 +118,7 @@ struct ifilemanager *getifilemanager() {
 	return ifilemanager;
 }
 
+struct iregionmanager *getiregionmanager() {
+
+	return iregionmanager;
+}

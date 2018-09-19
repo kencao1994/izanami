@@ -22,6 +22,7 @@ int regioncmp(void *arg1, void *arg2);
 //从worker上报的消息中获取iregioninfo
 void readfromreport(struct iregioninfo* info, void *arg);
 char *getregiondir(struct iregioninfo *info);
+char *getregiondatadir(const char *regiondir);
 
 struct iregioninfoset {
 

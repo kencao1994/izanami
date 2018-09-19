@@ -8,13 +8,41 @@
 #include "common.h"
 #include "ifile.h"
 
+#include <dirent.h>
 #include <stdlib.h>
 
-struct ifilemanager *initifilemanager(struct worker *worker, configifilemanager config) {
+static char ifilename[IZANAMI_MAX_LEN] = {'\0'};
+struct ifilemanager *initifilemanager(struct worker *worker,
+		configifilemanager config) {
 
 	struct ifilemanager *manager = (struct ifilemanager *) malloc(
 			sizeof(struct ifilemanager));
 	config(manager);
+
+	setiregioninfoset(worker->set, worker->datadir);
+
+	int i = 0;
+	for (; i < worker->set->num; i++) {
+		struct iregioninfo *info = worker->set->infos + i;
+		char *name = getregiondir(info);
+		char *data = getregiondatadir(name);
+		DIR *datadir = opendir(data);
+
+		struct dirent *datafile = NULL;
+		while ((datafile = readdir(datadir)) != NULL) {
+
+			if (datafile->d_type == DT_REG) {
+				memset(ifilename, 0, IZANAMI_MAX_LEN);
+				strcpy(ifilename, data);
+				ifilename[strlen(ifilename)] = '/';
+				strcpy(ifilename + strlen(ifilename), datafile->d_name);
+
+				initifile(manager, ifilename);
+			}
+		}
+
+	}
+
 	return manager;
 }
 
@@ -38,16 +66,17 @@ struct ifile *initifile(struct ifilemanager *manager, const char *filename) {
 	file->readrefcnt = 0;
 	file->prefile = file->postfile = NULL;
 
-	manager->filecnt++;
 	struct ifile *ptr = manager->files;
 	struct ifile *preptr = manager->files;
-	while (ptr != NULL && filenamecmp(ptr->filename, filename) < 0) {
+	int index = 0;
+	while (index < manager->filecnt && filenamecmp(ptr->filename, filename) < 0) {
 
+		index++;
 		preptr = ptr;
 		ptr = ptr->postfile;
 	}
 
-	if (preptr == NULL) {
+	if (index == 0) {
 		manager->files = file;
 	} else {
 		preptr->postfile = file;
@@ -55,6 +84,8 @@ struct ifile *initifile(struct ifilemanager *manager, const char *filename) {
 		file->prefile = preptr;
 		file->postfile = ptr;
 	}
+
+	manager->filecnt++;
 
 	return file;
 }
