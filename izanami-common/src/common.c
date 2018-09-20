@@ -89,7 +89,7 @@ int getfileblockmetasize() {
 void cpywithlen(char *to, char *from, int len) {
 
 	int i = 0;
-	while (i  < len) {
+	while (i < len) {
 		to[i] = from[i];
 		i++;
 	}

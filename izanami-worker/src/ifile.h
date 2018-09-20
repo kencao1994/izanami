@@ -13,9 +13,7 @@
 
 enum ifilestatus {
 
-	constructing,
-	constructed,
-	deletable
+	constructing, constructed, deletable
 };
 
 struct ifile {
@@ -37,8 +35,10 @@ struct ifilemanager {
 
 typedef void (*configifilemanager)(struct ifilemanager *manager);
 
-struct ifilemanager *initifilemanager(struct worker *worker, configifilemanager config);
-struct ifile *initifile(struct ifilemanager *manager, const char *filename);
+struct ifilemanager *initifilemanager(struct worker *worker,
+		configifilemanager config);
+struct ifile *initifile(struct ifilemanager *manager, const char *filename,
+		enum ifilestatus status);
 void deleteifile(struct ifilemanager *manager, struct ifile *file);
 struct iflie *getifiles(struct ifilemanager *manager, const char *dirname);
 char *getrandfilename();

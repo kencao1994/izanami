@@ -29,7 +29,7 @@ void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager) {
 	memset(filename, '\0', IZANAMI_MAX_LEN);
 	strcpy(filename, getregiondir(iregion->info));
 	int len = strlen(filename);
-	cpywithlen(filename + len , IZANAMI_DELIMITER, strlen(IZANAMI_DELIMITER));
+	cpywithlen(filename + len, IZANAMI_DELIMITER, strlen(IZANAMI_DELIMITER));
 	len = strlen(filename);
 
 	int index = 0;
@@ -52,7 +52,7 @@ void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager) {
 	tolocalfile(tmp, fd);
 	destroyskiplist(tmp);
 	//增加新的ifile
-	initifile(filemanager, filename);
+	initifile(filemanager, filename, constructing);
 
 	close(fd);
 }
@@ -93,5 +93,28 @@ struct iregionmanager *initiregionmanager(struct iregioninfoset *set) {
 		index++;
 	}
 	return manager;
+}
+
+static char keybuf[IZANAMI_MAX_LEN] = { '\0' };
+struct iregion *getiregion(struct iregionmanager *manager, char *table,
+		struct icell *icell) {
+
+	struct iregion *ret = NULL;
+	int index = 0;
+	while (index < manager->iregioncnt && ret == NULL) {
+		struct iregion *iregion = manager->iregions + index;
+		index++;
+
+		if (strcmp(iregion->info->tablename, table) != 0) {
+			continue;
+		}
+
+		getkey(icell, keybuf);
+		if (strcmp(iregion->info->startkey, keybuf) < 0
+				&& strcmp(iregion->info->endkey, keybuf) > 0) {
+			ret = iregion;
+		}
+	}
+	return ret;
 }
 

@@ -21,7 +21,7 @@ struct readaction *initreadaction(struct iregion *iregion, int clientfd) {
 	struct ifile *start = getifiles(filemanager, iregion->dirname);
 	struct ifile *tmp = start;
 
-	iregion->memstorerefcnt --;
+	iregion->memstorerefcnt--;
 	struct readaction *action = malloc(sizeof(struct readaction));
 	action->clientfd = clientfd;
 	action->type = scan;
@@ -71,7 +71,7 @@ void cleanaction(struct readaction *action) {
 		index++;
 	}
 
-	action->iregion->memstorerefcnt --;
+	action->iregion->memstorerefcnt--;
 	free(action);
 }
 

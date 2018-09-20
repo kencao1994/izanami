@@ -109,7 +109,6 @@ void insertinodeintoskiplist(struct skiplist *list, struct leafinode *inode) {
 
 	insertintoskiplist(list, inode->element, inode);
 
-
 //	struct leafinode *prenode = NULL;
 //	int step = 0;
 //	if (upperinode == NULL) {

@@ -36,4 +36,6 @@ struct iregionmanager {
 };
 
 struct iregionmanager *initiregionmanager(struct iregioninfoset *set);
+struct iregion *getiregion(struct iregionmanager *manager, char *table,
+		struct icell *icell);
 #endif /* IREGION_H_ */

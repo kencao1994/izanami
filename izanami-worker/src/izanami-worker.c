@@ -101,7 +101,8 @@ struct worker *initworker() {
 	// 初始化与izanami-master通信的线程
 	pthread_create(&(_worker->reportthread), NULL, initreportthread, _worker);
 
-	_worker->filemanager = ifilemanager = initifilemanager(_worker, _configifilemanager);
+	_worker->filemanager = ifilemanager = initifilemanager(_worker,
+			_configifilemanager);
 	_worker->regionmanager = iregionmanager = initiregionmanager(_worker->set);
 	setready();
 	return _worker;

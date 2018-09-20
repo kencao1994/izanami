@@ -1,4 +1,6 @@
-src/workerexecutor.d: ../src/workerexecutor.c ../src/workerexecutor.h \
+src/workerexecutor.d: ../src/workerexecutor.c \
+ /home/caojx/workspace/mydb/izanami-common/src/common.h \
+ /home/caojx/download/iniparser-master/src/dictionary.h \
  ../src/izanami-worker.h ../src/ifile.h \
  /home/caojx/workspace/mydb/izanami-common/src/config.h ../src/iregion.h \
  /home/caojx/workspace/mydb/izanami-common/src/iregioninfo.h \
@@ -9,10 +11,13 @@ src/workerexecutor.d: ../src/workerexecutor.c ../src/workerexecutor.h \
  /home/caojx/workspace/mydb/izanami-common/src/skiplist.h \
  /home/caojx/workspace/mydb/izanami-common/src/networkserver.h \
  /home/caojx/workspace/mydb/izanami-common/src/common.h \
- /home/caojx/download/iniparser-master/src/dictionary.h \
- /home/caojx/workspace/mydb/izanami-common/src/executor.h
+ /home/caojx/workspace/mydb/izanami-common/src/executor.h \
+ /home/caojx/workspace/mydb/izanami-common/src/operation.h \
+ ../src/workerexecutor.h
 
-../src/workerexecutor.h:
+/home/caojx/workspace/mydb/izanami-common/src/common.h:
+
+/home/caojx/download/iniparser-master/src/dictionary.h:
 
 ../src/izanami-worker.h:
 
@@ -38,6 +43,8 @@ src/workerexecutor.d: ../src/workerexecutor.c ../src/workerexecutor.h \
 
 /home/caojx/workspace/mydb/izanami-common/src/common.h:
 
-/home/caojx/download/iniparser-master/src/dictionary.h:
-
 /home/caojx/workspace/mydb/izanami-common/src/executor.h:
+
+/home/caojx/workspace/mydb/izanami-common/src/operation.h:
+
+../src/workerexecutor.h:

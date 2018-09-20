@@ -155,5 +155,6 @@ void printicell(struct icell *icell) {
 	getcol(icell, colbuf);
 	getval(icell, valbuf);
 	getkey(icell, keybuf);
-	printf("col:%s val:%s key:%s mvcc:%ld\n", colbuf, valbuf, keybuf, getmvcc(icell));
+	printf("col:%s val:%s key:%s mvcc:%ld\n", colbuf, valbuf, keybuf,
+			getmvcc(icell));
 }

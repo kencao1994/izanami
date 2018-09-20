@@ -75,7 +75,7 @@ void deletefromsublist(struct skiplist *list, struct steaminode *uppernode,
 		if (prenode != NULL && list->cmp(prenode->element, element) == 0) {
 
 			if (prenode->post != NULL) {
-			prenode->post->pre = prenode->pre;
+				prenode->post->pre = prenode->pre;
 			}
 			prenode->pre->post = prenode->post;
 			if (uppernode != NULL && uppernode->element != NULL) {
@@ -268,7 +268,7 @@ void setconsumer(struct skiplist *list, struct memconsumer *consumer) {
 
 struct fileblockbuf *initfileblockbuf(void *buf) {
 
-	struct fileblockbuf *ret = (struct fileblockbuf *)buf;
+	struct fileblockbuf *ret = (struct fileblockbuf *) buf;
 
 	memset(ret, 0, getfileblocksize());
 	ret->dataused = 0;
@@ -294,28 +294,27 @@ void tolocalfile(struct skiplist *list, int fd) {
 
 	while (start != NULL) {
 
-		if (buf->dataused +  icellsize(start->element) > (getfileblocksize() - getfileblockmetasize())) {
+		if (buf->dataused + icellsize(start->element)
+				> (getfileblocksize() - getfileblockmetasize())) {
 
 			write(fd, buf, getfileblocksize());
 			destroyfileblockbuf(buf);
 			buf = initfileblockbuf(malloc(getfileblocksize()));
 		}
 
-		char *to = (char *)buf + getmetasize() + buf->dataused;
+		char *to = (char *) buf + getmetasize() + buf->dataused;
 		char *from = (char *) start->element;
 
 		int cnt = icellsize(start->element);
 		int i = 0;
-		for(; i < cnt; i++) {
+		for (; i < cnt; i++) {
 			to[i] = from[i];
 		}
 		buf->dataused += icellsize(start->element);
-		buf->icellcount ++;
+		buf->icellcount++;
 		start = start->post;
 	}
 	write(fd, buf, getfileblocksize());
 	destroyfileblockbuf(buf);
 }
-
-
 

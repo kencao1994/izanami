@@ -11,7 +11,7 @@
 #include <dirent.h>
 #include <stdlib.h>
 
-static char ifilename[IZANAMI_MAX_LEN] = {'\0'};
+static char ifilename[IZANAMI_MAX_LEN] = { '\0' };
 struct ifilemanager *initifilemanager(struct worker *worker,
 		configifilemanager config) {
 
@@ -37,10 +37,10 @@ struct ifilemanager *initifilemanager(struct worker *worker,
 				ifilename[strlen(ifilename)] = '/';
 				strcpy(ifilename + strlen(ifilename), datafile->d_name);
 
-				initifile(manager, ifilename);
+				initifile(manager, ifilename, constructed);
 			}
 		}
-
+		closedir(datadir);
 	}
 
 	return manager;
@@ -54,14 +54,15 @@ int filenamecmp(const char *file1, const char *file2) {
 	return strcmp(file1, file2);
 }
 
-struct ifile *initifile(struct ifilemanager *manager, const char *filename) {
+struct ifile *initifile(struct ifilemanager *manager, const char *filename,
+		enum ifilestatus status) {
 
 	if (manager->filecnt >= manager->maxfilecnt) {
 		return NULL;
 	}
 
 	struct ifile *file = (struct ifile *) malloc(sizeof(struct ifile));
-	file->status = constructing;
+	file->status = status;
 	strcpy(file->filename, filename);
 	file->readrefcnt = 0;
 	file->prefile = file->postfile = NULL;
@@ -80,7 +81,8 @@ struct ifile *initifile(struct ifilemanager *manager, const char *filename) {
 		manager->files = file;
 	} else {
 		preptr->postfile = file;
-		ptr->prefile = file;
+		if (ptr != NULL)
+			ptr->prefile = file;
 		file->prefile = preptr;
 		file->postfile = ptr;
 	}

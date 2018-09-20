@@ -15,8 +15,7 @@
 
 enum readtype {
 
-	compact,
-	scan
+	compact, scan
 };
 
 typedef void (*seek)(void *reader, struct icell *icell);
