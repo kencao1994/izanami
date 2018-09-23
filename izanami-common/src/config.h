@@ -13,7 +13,6 @@
 #define IZANAMI_PARENT_DIR ".."
 
 #define IZANAMI_MAX_IP_LEN 1024
-
 #define IZANAMI_MAX_LEN 4096
 #define IZANAMI_MAX_KEY_LEN 512
 #define IZANAMI_MAX_TAB_LEN 128
@@ -50,6 +49,9 @@
 #define IZANAMI_FILE_MAXNUM "file:maxnum"
 #define IZANAMI_FILE_BLOCKSIZE "file:blocksize"
 #define IZANAMI_FILE_BLOCKMETASIZE "file:blockmetasize"
+
+#define IZANAMI_FLUSH_PERIOD "flush:period"
+
 
 #define IZANAMI_DELIMITER "/"
 

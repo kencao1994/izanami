@@ -11,6 +11,8 @@
 #include "config.h"
 #include "izanami-worker.h"
 
+#include <pthread.h>
+
 enum ifilestatus {
 
 	constructing, constructed, deletable
@@ -31,6 +33,7 @@ struct ifilemanager {
 	int filecnt;
 	int maxfilecnt;
 	struct ifile *files;
+	pthread_t flushthread;
 };
 
 typedef void (*configifilemanager)(struct ifilemanager *manager);
@@ -42,5 +45,6 @@ struct ifile *initifile(struct ifilemanager *manager, const char *filename,
 void deleteifile(struct ifilemanager *manager, struct ifile *file);
 struct iflie *getifiles(struct ifilemanager *manager, const char *dirname);
 char *getrandfilename();
+void *doflush(void *worker);
 
 #endif /* IFILE_H_ */

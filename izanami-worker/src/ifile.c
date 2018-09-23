@@ -43,6 +43,8 @@ struct ifilemanager *initifilemanager(struct worker *worker,
 		closedir(datadir);
 	}
 
+	pthread_create(&manager->flushthread, NULL, doflush, worker);
+
 	return manager;
 }
 
@@ -140,4 +142,29 @@ struct iflie *getifiles(struct ifilemanager *manager, const char *dirname) {
 		return NULL;
 	else
 		return start;
+}
+
+void *doflush(void *worker) {
+
+	while (!getready()) {
+		sleep(IZANAMI_READY_SLEEP_TIME);
+	}
+
+	struct worker *_worker = (struct worker *) worker;
+	dictionary *dict = getdict();
+	int flushperiod = iniparser_getint(dict, IZANAMI_FLUSH_PERIOD, 100);
+
+	while (TRUE) {
+
+		sleep(flushperiod);
+		struct iregion *start = _worker->regionmanager->iregions;
+		int cnt = _worker->regionmanager->iregioncnt;
+		int index = 0;
+		for (; index < cnt; index++) {
+
+			flushiregion(start + index, _worker->filemanager);
+		}
+	}
+
+	return NULL;
 }

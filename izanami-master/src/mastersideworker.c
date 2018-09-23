@@ -5,6 +5,7 @@
  *      Author: caojx
  */
 
+#include "common.h"
 #include "mastersideworker.h"
 
 #include <stdlib.h>
@@ -58,24 +59,15 @@ void addmastersideworker(struct mastersideworkermanager *manager, int fd,
 void getregioninfos(struct mastersideworkermanager *manager, int fd) {
 
 	int count = manager->workernum;
-	struct mastersideworker *worker = (struct mastersideworker *) malloc(
-			sizeof(struct mastersideworker) * count);
-
-	int i = 0;
-	for (; i < count; i++) {
-
-		struct mastersideworker *tmp1 = worker + i;
-		struct mastersideworker *tmp2 = manager->workers + i;
-
-		strcpy(tmp1->ip, tmp2->ip);
-		tmp1->set = tmp2->set;
-		tmp1->workerfd = -1;
-	}
-
 	send(fd, &count, sizeof(int), 0);
-	send(fd, worker, sizeof(struct mastersideworker) * count, 0);
-	/**
-	 * 规整化内存，暂时不用内存池
-	 */
-	free(worker);
+
+	struct mastersideworker *worker = manager->workers;
+	int index = 0;
+	for (; index < count ; index ++) {
+		worker += index;
+		send(fd, worker->ip, IZANAMI_MAX_IP_LEN, 0);
+		int cnt = worker->set->num;
+		send(fd, &cnt, sizeof(int), 0);
+		send(fd, worker->set->infos, cnt * sizeof(struct iregioninfo), 0);
+	}
 }
