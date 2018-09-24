@@ -15,10 +15,10 @@
 
 enum readtype {
 
-	compact, scan
+	compact, scanread
 };
 
-typedef void (*seek)(void *reader, struct icell *icell);
+typedef void (*seek)(void *reader);
 typedef struct icell* (*iterate)(void *reader);
 
 struct reader {
@@ -37,6 +37,7 @@ struct filereader {
 	iterate iteratefun;
 
 	int fd;
+	int offset;
 	char *buf;
 	struct ifile *ifile;
 };

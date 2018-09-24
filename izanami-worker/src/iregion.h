@@ -9,6 +9,7 @@
 #define IREGION_H_
 
 #include "config.h"
+#include "icell.h"
 #include "ifile.h"
 #include "iregioninfo.h"
 #include "memconsumer.h"
@@ -38,4 +39,6 @@ struct iregionmanager {
 struct iregionmanager *initiregionmanager(struct iregioninfoset *set);
 struct iregion *getiregion(struct iregionmanager *manager, char *table,
 		struct icell *icell);
+struct iregion *getiregionbyregioninfo(struct iregionmanager *manager, char *tablename, char *startkey, char *endkey);
+
 #endif /* IREGION_H_ */

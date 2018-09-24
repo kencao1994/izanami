@@ -39,30 +39,37 @@ int main(int argc, char** argv) {
 	enum operation op = route;
 	send(sockfd, &op, sizeof(enum operation), 0);
 
-	while (1) {
-		enum operation oput = put;
-		send(workerfd, &oput, sizeof(oput), 0);
-		char *table = "tab1";
-		send(workerfd, table, 4, 0);
+	enum operation oscan = scan ;
+	send(workerfd, &oscan, sizeof(oscan), 0);
 
-		int keylen = 1;
-		int collen = 10;
-		int vallen = 100;
-		int len = keylen + collen + vallen + 3 * sizeof(short) + sizeof(long);
-		struct icell *cell = malloc(len);
-		cell->keylen = keylen;
-		cell->collen = collen;
-		cell->vallen = vallen;
-		randstr((void *) cell + icellheadlen(cell), cell->collen);
-		randstr((void *) cell + icellheadlen(cell) + cell->collen,
-				cell->vallen);
-		randstr(
-				(void *) cell + icellheadlen(cell) + cell->collen
-						+ cell->vallen, cell->keylen);
-		send(workerfd, cell, len, 0);
+	send(workerfd, "tab1", 4, 0);
+	send(workerfd, "0", 1, 0);
+	send(workerfd, "9", 1, 0);
 
-		free(cell);
-	}
+//	while (1) {
+//		enum operation oput = put;
+//		send(workerfd, &oput, sizeof(oput), 0);
+//		char *table = "tab1";
+//		send(workerfd, table, 4, 0);
+//
+//		int keylen = 1;
+//		int collen = 10;
+//		int vallen = 100;
+//		int len = keylen + collen + vallen + 3 * sizeof(short) + sizeof(long);
+//		struct icell *cell = malloc(len);
+//		cell->keylen = keylen;
+//		cell->collen = collen;
+//		cell->vallen = vallen;
+//		randstr((void *) cell + icellheadlen(cell), cell->collen);
+//		randstr((void *) cell + icellheadlen(cell) + cell->collen,
+//				cell->vallen);
+//		randstr(
+//				(void *) cell + icellheadlen(cell) + cell->collen
+//						+ cell->vallen, cell->keylen);
+//		send(workerfd, cell, len, 0);
+//
+//		free(cell);
+//	}
 	close(sockfd);
 	close(workerfd);
 	exit(0);

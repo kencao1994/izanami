@@ -26,6 +26,16 @@ void inserticell(struct iregion *iregion, struct icell *icell) {
 static char filename[IZANAMI_MAX_LEN];
 void flushiregion(struct iregion *iregion, struct ifilemanager *filemanager) {
 
+
+	struct steaminode *top = iregion->memstore->routenode;
+	while (top->down != NULL) {
+		top = top->down;
+	}
+	if (top->post == NULL) {
+		return ;
+	}
+
+
 	memset(filename, '\0', IZANAMI_MAX_LEN);
 	strcpy(filename, getregiondir(iregion->info));
 	char *file = getregiondatadir(filename);
@@ -121,3 +131,21 @@ struct iregion *getiregion(struct iregionmanager *manager, char *table,
 	return ret;
 }
 
+struct iregion *getiregionbyregioninfo(struct iregionmanager *manager, char *tablename, char *startkey, char *endkey) {
+
+	struct iregion *ret = NULL;
+
+	int index = 0;
+	while ( ret == NULL && index < manager->iregioncnt) {
+		struct iregion *tmp = manager->iregions + index;
+		if (strcmp(tmp->info->tablename, tablename) == 0
+		&& strcmp(tmp->info->startkey, startkey) == 0
+		&& strcmp(tmp->info->endkey, endkey) == 0
+		) {
+			ret = tmp;
+		}
+		index ++;
+	}
+
+	return ret;
+}
